@@ -10,26 +10,170 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170612155523) do
+ActiveRecord::Schema.define(version: 20170615124403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "attachinary_files", force: :cascade do |t|
+    t.string   "attachinariable_type"
+    t.integer  "attachinariable_id"
+    t.string   "scope"
+    t.string   "public_id"
+    t.string   "version"
+    t.integer  "width"
+    t.integer  "height"
+    t.string   "format"
+    t.string   "resource_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.index ["attachinariable_type", "attachinariable_id", "scope"], name: "by_scoped_parent", using: :btree
+  end
+
+  create_table "delivery_conditions", force: :cascade do |t|
+    t.integer  "relation_id"
+    t.datetime "order_day"
+    t.datetime "order_deadline"
+    t.datetime "delivery_day"
+    t.datetime "delivery_deadline"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+    t.index ["relation_id"], name: "index_delivery_conditions_on_relation_id", using: :btree
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer  "relation_id"
+    t.integer  "product_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+    t.index ["product_id"], name: "index_favorites_on_product_id", using: :btree
+    t.index ["relation_id"], name: "index_favorites_on_relation_id", using: :btree
+  end
+
+  create_table "groups", force: :cascade do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "siret"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  create_table "order_lines", force: :cascade do |t|
+    t.integer  "product_id"
+    t.integer  "order_id"
+    t.integer  "quantity"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["order_id"], name: "index_order_lines_on_order_id", using: :btree
+    t.index ["product_id"], name: "index_order_lines_on_product_id", using: :btree
+  end
+
+  create_table "orders", force: :cascade do |t|
+    t.integer  "relation_id"
+    t.datetime "delivery_date"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["relation_id"], name: "index_orders_on_relation_id", using: :btree
+  end
+
+  create_table "pricing_conditions", force: :cascade do |t|
+    t.integer  "relation_id"
+    t.integer  "product_id"
+    t.integer  "price"
+    t.integer  "quantity_min", default: 0
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
+    t.index ["product_id"], name: "index_pricing_conditions_on_product_id", using: :btree
+    t.index ["relation_id"], name: "index_pricing_conditions_on_relation_id", using: :btree
+  end
+
+  create_table "products", force: :cascade do |t|
+    t.string   "name"
+    t.string   "reference"
+    t.string   "public_price"
+    t.string   "packaging"
+    t.boolean  "is_discount",    default: false
+    t.integer  "provider_id"
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+    t.string   "measuring_unit"
+    t.index ["provider_id"], name: "index_products_on_provider_id", using: :btree
+  end
+
+  create_table "providers", force: :cascade do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "siret"
+    t.boolean  "is_price_infos", default: false
+    t.datetime "created_at",                     null: false
+    t.datetime "updated_at",                     null: false
+  end
+
+  create_table "relations", force: :cascade do |t|
+    t.integer  "restaurant_id"
+    t.integer  "provider_id"
+    t.integer  "order_value_min", default: 0
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.index ["provider_id"], name: "index_relations_on_provider_id", using: :btree
+    t.index ["restaurant_id"], name: "index_relations_on_restaurant_id", using: :btree
+  end
+
+  create_table "restaurants", force: :cascade do |t|
+    t.string   "email"
+    t.string   "name"
+    t.string   "address"
+    t.string   "phone_number"
+    t.string   "siret"
+    t.integer  "group_id"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.index ["group_id"], name: "index_restaurants_on_group_id", using: :btree
+  end
+
   create_table "users", force: :cascade do |t|
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: "", null: false
+    t.string   "email",                  default: "",    null: false
+    t.string   "encrypted_password",     default: "",    null: false
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0,  null: false
+    t.integer  "sign_in_count",          default: 0,     null: false
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.inet     "current_sign_in_ip"
     t.inet     "last_sign_in_ip"
-    t.datetime "created_at",                          null: false
-    t.datetime "updated_at",                          null: false
+    t.datetime "created_at",                             null: false
+    t.datetime "updated_at",                             null: false
+    t.string   "first_name"
+    t.string   "last_name"
+    t.string   "phone_number"
+    t.string   "position",               default: ""
+    t.string   "profile",                default: ""
+    t.integer  "restaurant_id"
+    t.integer  "provider_id"
+    t.boolean  "admin",                  default: false
+    t.string   "provider"
+    t.string   "uid"
+    t.string   "facebook_picture_url"
+    t.string   "token"
+    t.datetime "token_expiry"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
   end
 
+  add_foreign_key "delivery_conditions", "relations"
+  add_foreign_key "favorites", "products"
+  add_foreign_key "favorites", "relations"
+  add_foreign_key "order_lines", "orders"
+  add_foreign_key "order_lines", "products"
+  add_foreign_key "orders", "relations"
+  add_foreign_key "pricing_conditions", "products"
+  add_foreign_key "pricing_conditions", "relations"
+  add_foreign_key "products", "providers"
+  add_foreign_key "relations", "providers"
+  add_foreign_key "relations", "restaurants"
 end
