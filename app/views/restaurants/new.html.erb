@@ -1,0 +1,36 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <div class="form-devise">
+
+        <h2>Créer un restaurant</h2>
+
+        <%= simple_form_for(@restaurant) do |f| %>
+          <%= f.error_notification %>
+
+          <div class="form-inputs">
+            <%= f.input :email, required: true, autofocus: true %>
+
+            <%= f.input :name, label: "Nom de l'enseigne", required: true, autofocus: true %>
+
+            <%= f.input :address, label: "Adresse", required: true, autofocus: true %>
+
+            <%= f.input :phone_number, label: "Téléphone", hint: "Nous avons besoin de votre numéro de téléphone pour vous contacter en cas de problème sur votre commande.", required: true, autofocus: true %>
+
+            <%= f.input :siret, label: "Numéro SIRET", required: true, autofocus: true %>
+
+            <%= f.input :photo, as: :attachinary %>
+
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, "Sauvegarder" %>
+          </div>
+        <% end %>
+
+        <h4 class="text-center" ><%= link_to "Retour", :back %></h4>
+
+      </div>
+    </div>
+  </div>
+</div>

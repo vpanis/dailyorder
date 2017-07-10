@@ -2,11 +2,13 @@ source 'https://rubygems.org'
 ruby '2.3.3'
 
 gem 'rails', '5.0.3'
+gem 'rails-i18n'
 gem 'puma'
 gem 'pg'
 gem 'figaro'
 gem 'jbuilder', '~> 2.0'
 gem 'devise'
+gem 'devise-i18n'
 gem 'redis'
 
 gem "pundit"
@@ -22,14 +24,20 @@ gem 'sass-rails'
 gem 'jquery-rails'
 gem 'uglifier'
 gem 'bootstrap-sass'
+gem 'bootstrap-datepicker-rails'
 gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
+gem 'momentjs-rails', '>= 2.9.0'
+
+# Gems to generate pdf files
+gem 'wicked_pdf'
+gem 'wkhtmltopdf-binary'
 
 group :development, :test do
   gem 'binding_of_caller'
   gem 'better_errors'
-
+  gem "letter_opener"
   gem 'pry-byebug'
   gem 'pry-rails'
   gem 'spring'

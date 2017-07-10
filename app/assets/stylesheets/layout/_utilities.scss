@@ -4,10 +4,79 @@
  * Feel free to change them and create your own
  * ------------------------------------- */
 
+
+textarea {
+  width: 20em;
+}
+
+// Links
+a {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+// Body
+.highlight {
+  color: $green;
+  margin: 0px 0px 30px 0px;
+}
+.italic {
+  font-style: italic;
+}
+.marged-sidebar {
+  margin-left: 200px;
+}
+.centered-div {
+  width: 90%;
+  margin: auto;
+}
+.sm-left-margin {
+  a {
+    margin-left: 10px;
+  }
+}
+.sm-right-margin {
+  margin-right: 10px;
+}
+
+// text
+
+p{
+  color: #424770;
+  font-size: 18px;
+  line-height: 24px;
+}
+li {
+  color: #424770;
+}
+.line-separator {
+  border-bottom: solid 1px $green;
+  width: 100%;
+}
+
 // Paddings
 .padded {
   padding-top: 5em;
   padding-bottom: 5em;
+}
+
+// Margins
+.marged-top {
+  margin-top: 50px;
+}
+.marged-bottom {
+  margin-bottom: 50px;
+}
+.sm-marged-bottom {
+  margin-bottom: 30px;
+}
+.sm-marged-top {
+  margin-bottom: 30px;
+}
+
+// Floats
+.float_right {
+    float: right!important;
 }
 
 // Backgrounds
@@ -18,7 +87,7 @@
   background: #aeaeae;
 }
 .bg-blue {
-  background: #00a3e1;
+  background: #469AE0;
 }
 .bg-dark-blue {
   background: #3b5998;

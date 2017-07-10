@@ -1,2 +1,22 @@
-<h1>Pages#home</h1>
-<p>Find me in app/views/pages/home.html.erb</p>
+<div class="banner-home" style="background-image: linear-gradient(135deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.6) 50%), url(<%= asset_path 'bg.png' %>);">
+  <div class="container">
+    <div class="row">
+      <div class="col-xs-12">
+        <div class="banner-content">
+
+          <%= image_tag "written_logo.png", class: "written-logo-large" %>
+
+          <h2>Un service simple et rapide pour passer vos commandes quotidiennes.</h2>
+
+          <p>Toutes vos commandes pré-remplies et consultables.</p>
+
+          <%= link_to "Passer vos commandes", restaurants_path, class: "btn btn-success btn-lg" %>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+

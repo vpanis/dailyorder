@@ -1,0 +1,28 @@
+.card-order-details .card-product {
+  background-color: white;
+}
+.card-js .card-order {
+  margin-bottom: 0px;
+}
+.card-order-head.head {
+  font-size: 13px;
+  margin-top: 0px;
+  margin-bottom: 20px;
+  justify-content: space-between;
+}
+.card-order-head.status {
+  margin-bottom: 0px;
+  background-color: white;
+  padding: 0px;
+  align-items: bottom;
+  p {
+    font-size: 15px;
+    border: 1px solid $bg;
+    padding: 5px;
+    margin: 0px;
+  }
+}
+.active {
+  font-weight: bolder;
+  background-color: $bg;
+}

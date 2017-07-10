@@ -3,7 +3,7 @@ class CreateOrderLines < ActiveRecord::Migration[5.0]
     create_table :order_lines do |t|
       t.references :product, foreign_key: true
       t.references :order, foreign_key: true
-      t.integer :quantity
+      t.float :quantity
 
       t.timestamps
     end

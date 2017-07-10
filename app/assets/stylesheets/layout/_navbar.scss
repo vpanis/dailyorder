@@ -35,7 +35,7 @@
 .navbar-wagon-item {
   flex: 0 1 auto;
   cursor: pointer;
-  padding: 0 20px;
+  padding: 0 0 0 20px;
 }
 
 /* Navbar standard link */
@@ -84,7 +84,7 @@
   z-index: 1;
 }
 .navbar-wagon-search-input {
-  flex: 0 1 300px;
+  flex: 0 1 600px;
   transition: all 0.15s ease;
   line-height: 40px;
   font-weight: lighter;

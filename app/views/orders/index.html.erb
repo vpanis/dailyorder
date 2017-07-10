@@ -1,0 +1,285 @@
+<div class="container">
+
+  <div class="box">
+
+  <h2 class="text-center">Liste de mes commandes</h2>
+
+  <div class="text-center btn-order">
+    <%= link_to "Passer une nouvelle commande", restaurant_relations_path(@restaurant), class: "btn btn-success" %>
+  </div>
+
+
+    <div class="row">
+
+      <div class="col-xs-12">
+        <div class="card-order-head status">
+          <p class="tab pending">En cours</p>
+          <p class="tab validated active">Validées</p>
+          <p class="tab sent">Envoyées</p>
+        </div>
+        <div class="card-order-head head">
+          <p class="tab"><strong>Statut</strong></p>
+          <p class="tab"><strong>Fournisseur</strong></p>
+          <p class="tab"><strong>Livraison</strong></p>
+        </div>
+      </div>
+
+      <% if !@orders_pending.first.nil? %>
+
+        <% @orders_pending.each do |order| %>
+
+          <div class="order pending hidden">
+
+            <div class="col-xs-12 card-js">
+              <div class="card-order">
+                <p class="author"><%= order.status %></p>
+                <p class="supplier-name"><%= order.relation.supplier.name %></p>
+                <p class="delivery-date"><%= order.status == "En cours" ? "A définir" : order.delivery_date.strftime("%d/%m/%Y") %></p>
+              </div>
+              <div class="card-order-mgt">
+
+                <% if order.status != "Envoyée" %>
+                  <%= link_to "#", class: "pencil" do %>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to "#", class: "pencil" do %>
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  <% end %>
+                <% end %>
+
+                <p class="creation-date"><%= order.delivery_date.nil? ? "En attente de validation" : "#{order.created_at == order.updated_at ? "Crée le" : "Modifiée le"} #{order.delivery_date.strftime("%d/%m/%Y à %H:%M")} par #{order.user.first_name}"%></p>
+
+                <%= link_to restaurant_order_path(@restaurant, order), method: :delete, class: "trash" do %>
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <% end %>
+
+              </div>
+            </div>
+
+            <div class="col-xs-12 card-js-details">
+              <div class="card-order-details">
+                <%= form_tag restaurant_order_path(@restaurant, order), method: :put do %>
+                  <% order.order_lines.each do |order_line| %>
+                    <div class="col-xs-12">
+                      <div class="card-product">
+
+                        <%= fields_for '@orders.order_lines[]', order_line do |f| %>
+
+                          <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
+                          <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", readonly: order.status == "Envoyée" ? true : false, placeholder: order_line.product.measuring_unit == "kgs" ? order_line.quantity.to_f : order_line.quantity.to_i %>
+                          <div class="unit"><%= order_line.product.measuring_unit %></div>
+                        <% end %>
+
+                      </div>
+                    </div>
+                  <% end %>
+
+                  <%= hidden_field_tag(:delivery_date, nil, options = { class: "datepicker_hidden_field" }) %>
+
+                  <div class="card-product", id="btn-save">
+                    <div id="div-save">
+                      <button type="button" class="btn btn-success btn-modal button-save" data-toggle="modal" data-target=".bs-example-modal-sm">Valider la commande</button>
+                    </div>
+                  </div>
+
+                  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                          <h4 class="modal-title" id="myModalLabel">Choississez la date de livraison</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="calendar text-center"></div>
+                        </div>
+                        <div class="modal-footer">
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
+                          <%= submit_tag("Valider", :id=>"button-submit", class: "btn btn-success", :name=>"submit") %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+
+        <% end %>
+      <% end %>
+
+
+
+      <% if !@orders_validated.first.nil? %>
+
+        <% @orders_validated.each do |order| %>
+
+          <div class="order validated">
+
+            <div class="col-xs-12 card-js">
+              <div class="card-order">
+                <p class="author"><%= order.status %></p>
+                <p class="supplier-name"><%= order.relation.supplier.name %></p>
+                <p class="delivery-date"><%= order.status == "En cours" ? "A définir" : order.delivery_date.strftime("%d/%m/%Y") %></p>
+              </div>
+              <div class="card-order-mgt">
+
+                <% if order.status != "Envoyée" %>
+                  <%= link_to "#", class: "pencil" do %>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to restaurant_relation_document_path(@restaurant, order.relation, order.documents.where(document_type: "Bon de commande").first, format: 'pdf', target: :_blank) do %>
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  <% end %>
+                <% end %>
+
+                <p class="creation-date"><%= order.delivery_date.nil? ? "En attente de validation" : "#{order.created_at == order.updated_at ? "Crée le" : "Modifiée le"} #{order.delivery_date.strftime("%d/%m/%Y à %H:%M")} par #{order.user.first_name}"%></p>
+
+                <%= link_to restaurant_order_path(@restaurant, order), method: :delete, class: "trash" do %>
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <% end %>
+
+              </div>
+            </div>
+
+            <div class="col-xs-12 card-js-details">
+              <div class="card-order-details">
+                <%= form_tag restaurant_order_path(@restaurant, order), method: :put do %>
+                  <% order.order_lines.each do |order_line| %>
+                    <div class="col-xs-12">
+                      <div class="card-product">
+
+                        <%= fields_for '@orders.order_lines[]', order_line do |f| %>
+
+                          <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
+                          <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", readonly: order.status == "Envoyée" ? true : false, placeholder: order_line.product.measuring_unit == "kgs" ? order_line.quantity.to_f : order_line.quantity.to_i %>
+                          <div class="unit"><%= order_line.product.measuring_unit %></div>
+                        <% end %>
+
+                      </div>
+                    </div>
+                  <% end %>
+
+                <% if order.status != "Envoyée" %>
+                  <div class="card-product", id="btn-save">
+                    <div id="div-save">
+                      <%= button_tag(order.status == "En cours" ? "Valider" : "Enregistrer les modifications" ,type: "submit", name: "submit", class: "btn btn-success button-save") %>
+                    </div>
+                  </div>
+                <% end %>
+
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+
+        <% end %>
+      <% end %>
+
+
+
+      <% if !@orders_sent.first.nil? %>
+
+        <% @orders_sent.each do |order| %>
+
+          <div class="order sent hidden">
+
+            <div class="col-xs-12 card-js">
+              <div class="card-order">
+                <p class="author"><%= order.status %></p>
+                <p class="supplier-name"><%= order.relation.supplier.name %></p>
+                <p class="delivery-date"><%= order.status == "En cours" ? "A définir" : order.delivery_date.strftime("%d/%m/%Y") %></p>
+              </div>
+              <div class="card-order-mgt">
+
+                <% if order.status != "Envoyée" %>
+                  <%= link_to "#", class: "pencil" do %>
+                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                  <% end %>
+                <% else %>
+                  <%= link_to restaurant_relation_document_path(@restaurant, order.relation, order.documents.where(document_type: "Bon de commande").first, target: :_blank, format: 'pdf') do %>
+                    <i class="fa fa-eye" aria-hidden="true"></i>
+                  <% end %>
+                <% end %>
+
+                <p class="creation-date"><%= order.delivery_date.nil? ? "En attente de validation" : "#{order.created_at == order.updated_at ? "Crée le" : "Modifiée le"} #{order.delivery_date.strftime("%d/%m/%Y à %H:%M")} par #{order.user.first_name}"%></p>
+
+                <%= link_to restaurant_order_path(@restaurant, order), method: :delete, class: "trash" do %>
+                  <i class="fa fa-trash-o" aria-hidden="true"></i>
+                <% end %>
+
+              </div>
+            </div>
+
+            <div class="col-xs-12 card-js-details">
+              <div class="card-order-details">
+                <%= form_tag restaurant_order_path(@restaurant, order), method: :put do %>
+                  <% order.order_lines.each do |order_line| %>
+                    <div class="col-xs-12">
+                      <div class="card-product">
+
+                        <%= fields_for '@orders.order_lines[]', order_line do |f| %>
+
+                          <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
+                          <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", readonly: order.status == "Envoyée" ? true : false, placeholder: order_line.product.measuring_unit == "kgs" ? order_line.quantity.to_f : order_line.quantity.to_i %>
+                          <div class="unit"><%= order_line.product.measuring_unit %></div>
+                        <% end %>
+
+                      </div>
+                    </div>
+                  <% end %>
+
+                <% end %>
+              </div>
+            </div>
+
+          </div>
+
+        <% end %>
+      <% end %>
+
+
+
+
+    </div>
+
+  </div>
+
+</div>
+
+
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+      $(".card-js-details").hide();
+      $(".card-order-mgt").hide();
+      $(".card-js").on('click', function () {
+          var $a = $(this).next(".card-js-details");
+          $a.slideToggle(); //toggle the current one
+          $(".card-js-details").not($a).slideUp(); //hide the others
+          var $b = $(this).children(".card-order-mgt");
+          $b.slideToggle(); //toggle the current one;
+          $(".card-order-mgt").not($b).slideUp(); //hide the others
+      });
+      $(".card-order-head.status .tab").on('click', function () {
+          $(".card-order-head.status .tab").removeClass("active")
+          $(this).toggleClass("active");
+          $(".order").addClass("hidden");
+          if ($(this).hasClass("pending")) {
+            $('.order.pending').removeClass("hidden");
+          }
+          if ($(this).hasClass("validated")) {
+            $('.order.validated').removeClass("hidden");
+          }
+          if ($(this).hasClass("sent")) {
+            $('.order.sent').removeClass("hidden");
+          }
+      });
+    });
+  </script>
+<% end %>

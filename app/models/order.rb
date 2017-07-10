@@ -1,6 +1,10 @@
 class Order < ApplicationRecord
   has_many :order_lines, dependent: :destroy
+  has_many :documents, dependent: :destroy
   belongs_to :relation
+  belongs_to :user
 
-  validates :delivery_date, presence: true
+  delegate :restaurant, :to => :relation
+
+  validates :status, presence: true, inclusion: { in: ["Validée", "Envoyée", "En cours"] }
 end

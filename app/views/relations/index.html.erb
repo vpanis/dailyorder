@@ -1,0 +1,46 @@
+<div class="container">
+
+  <div class="box">
+
+    <h2 class="text-center"><%= @restaurant.name %></h2>
+    <h3 class="text-center">Sélectionner un fournisseur</h3>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-4">
+
+          <%= link_to new_supplier_path do %>
+
+            <div class="card-dashboard flexbox text-center">
+              <h2 class="highlight" style= "margin-bottom: 20px">
+                Ajouter un fournisseur
+              </h2>
+            </div>
+
+          <% end %>
+
+        </div>
+
+          <% @suppliers.each do |supplier|%>
+
+            <div class="col-xs-12 col-sm-4">
+
+              <%= link_to restaurant_relation_path(@restaurant, supplier), class: "card-link" do %>
+
+                  <div class="card-dashboard">
+
+                    <div class="card-dashboard-description">
+                      <h2 class="highlight"><%= supplier.name %></h2>
+                    </div>
+
+                  </div>
+
+              <% end %>
+
+            </div>
+
+          <% end %>
+
+    </div>
+  </div>
+</div>

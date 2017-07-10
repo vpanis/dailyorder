@@ -1,0 +1,52 @@
+<div class="container">
+
+  <div class="box">
+
+    <h2 class="text-center"><%= current_user.group.name %></h2>
+    <h3 class="text-center">Sélectionner un restaurant</h3>
+
+      <div class="row">
+
+        <div class="col-xs-12 col-sm-4">
+
+          <%= link_to new_restaurant_path do %>
+
+            <div class="card-dashboard flexbox text-center">
+              <h2 class="highlight" style= "margin-bottom: 20px">
+                Créer un restaurant
+              </h2>
+            </div>
+
+          <% end %>
+
+        </div>
+
+          <% @restaurants.each do |restaurant|%>
+
+            <div class="col-xs-12 col-sm-4">
+
+              <%= link_to restaurant_relations_path(restaurant), class: "card-link" do %>
+
+                  <div class="card-dashboard">
+
+                    <div class="card-dashboard-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= restaurant.photo.nil? ? "" : (cl_image_path restaurant.photo.public_id, width: 280, height: 250, crop: :fill) %>);"></div>
+
+                    <div class="card-dashboard-description">
+                      <h2 class="highlight"><%= restaurant.name %></h2>
+                    </div>
+
+                    <div class="card-dashboard-description">
+                      <i class="fa fa-user-plus" aria-hidden="true"></i>
+                    </div>
+
+                  </div>
+
+              <% end %>
+
+            </div>
+
+          <% end %>
+
+    </div>
+  </div>
+</div>

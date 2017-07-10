@@ -1,0 +1,210 @@
+.card {
+  color: #424242;
+  background-color: white;
+  padding: 20px 30px;
+  border: solid 1px #ffcccc;
+  border-top: solid 1px $red;
+  height: 440px;
+  text-align: center;
+  border-radius: 0px 0px 6px 6px;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.card-link:hover {
+  text-decoration: none;
+}
+.card-category {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  color: white;
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 50px;
+}
+.card-dashboard {
+  color: #424242;
+  background-color: white;
+  margin-top: 30px;
+  padding: 20px 20px;
+  border: solid 1px $green;
+  border-top: solid 2px $green;
+  height: 300px;
+  text-align: center;
+  border-radius: 0px 0px 6px 6px;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.card-dashboard-description {
+  color: #424242;
+  h2 {
+    font-size: 20px;
+  }
+  p {
+  }
+}
+.card-dashboard-image {
+  background-color: white;
+  margin-top: 0px;
+  padding: 10px 10px;
+  border: solid 1px #ffe0e0;
+  min-height: 200px;
+  position: relative;
+  margin-bottom: 10px;
+}
+.card-product {
+  background-color: $bg;
+  color: #424242;
+  margin: 5px;
+  padding: 5px;
+  height: 35px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  label {
+    margin-bottom: 0px;
+    font-weight: lighter;
+  }
+  .title {
+    font-size: 14px;
+    flex: 1 0 auto;
+  }
+  .quantity {
+    font-size: 14px;
+    flex: 0 0 8%;
+    min-width: 60px;
+    padding: 2px 2px 2px 10px;
+    margin: 0px 10px;
+  }
+  .unit {
+    font-size: 14px;
+    flex: 0 0 8%;
+    margin: 0px 10px 0px 0px;
+  }
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.card-product-title{
+  font-size: 20px;
+  margin: 5px;
+  padding: 5px;
+}
+.btn-modal {
+  margin: 20px 5px 5px 5px;
+}
+.card-order {
+  background-color: $bg;
+  color: #424242;
+  margin: 5px;
+  padding: 5px;
+  height: 35px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  .author {
+    text-align: center;
+    font-size: 14px;
+    flex: 0 0 16%;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+  }
+  .supplier-name {
+    text-align: center;
+    font-size: 14px;
+    flex: 1 0 auto;
+    min-width: 60px;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+  }
+  .delivery-date {
+    text-align: center;
+    font-size: 14px;
+    flex: 0 0 20%;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+  }
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.card-order-head {
+  background-color: $bg;
+  color: #424242;
+  margin: 5px;
+  padding: 5px;
+  height: 35px;
+  opacity: 0.8;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  .tab {
+    text-align: center;
+    font-size: 14px;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+    width: 33%;
+  }
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.btn-order {
+  margin: 10px;
+}
+.card-order-mgt {
+  background-color: $bg;
+  color: #424242;
+  margin: 0px 5px 5px 5px;
+  padding: 5px;
+  height: 35px;
+  opacity: 0.8;
+  display: flex;
+  align-items: center;
+  .pencil {
+    font-size: 20px;
+    flex: 0 0 10%;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &:hover {
+    opacity: 1;
+    text-decoration: none;
+    }
+  }
+  .creation-date {
+    font-size: 12px;
+    flex: 1 0 auto;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+    text-align: center;
+  }
+  .trash {
+    font-size: 20px;
+    flex: 0 0 10%;
+    padding: 2px 2px 2px 2px;
+    margin: 0px 10px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+  }
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}

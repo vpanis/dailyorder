@@ -1,27 +1,45 @@
-<h2>Edit <%= resource_name.to_s.humanize %></h2>
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <div class="form-devise">
 
-<%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
-  <%= f.error_notification %>
+        <h2>Compléter mon profil</h2>
 
-  <div class="form-inputs">
-    <%= f.input :email, required: true, autofocus: true %>
+        <%= simple_form_for(resource, as: resource_name, url: registration_path(resource_name), html: { method: :put }) do |f| %>
+          <%= f.error_notification %>
 
-    <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
-      <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
-    <% end %>
+          <div class="form-inputs">
+            <%#= f.input :email, label: "Email", required: true, autofocus: true %>
 
-    <%= f.input :password, autocomplete: "off", hint: "leave it blank if you don't want to change it", required: false %>
-    <%= f.input :password_confirmation, required: false %>
-    <%= f.input :current_password, hint: "we need your current password to confirm your changes", required: true %>
+            <% if devise_mapping.confirmable? && resource.pending_reconfirmation? %>
+              <p>Currently waiting confirmation for: <%= resource.unconfirmed_email %></p>
+            <% end %>
+
+            <%= f.input :first_name, label: "Prénom", required: true, autofocus: true %>
+
+            <%= f.input :last_name, label: "Nom", required: true, autofocus: true %>
+
+            <%= f.input :phone_number, label: "Votre numéro de téléphone portable", hint: "Nous avons besoin de votre numéro de téléphone pour vous contacter en cas de problème sur votre commande.", required: true, autofocus: true %>
+
+            <%= f.input :position, label: "Le poste que vous occupez", collection: ["Chef de cuisine", "Second de cuisine", "Directeur de salle", "Responsable de salle", "Dirigeant d'un restaurant", "Dirigeant de plusieurs restaurants"], required: true, autofocus: true %>
+
+            <%#= f.input :password, label: "Nouveau mot de passe", autocomplete: "off", hint: "Ne pas renseigner si vous ne souhaitez pas changer votre mot de passe.", required: false %>
+            <%#= f.input :password_confirmation, label: "Confirmation nouveau mot de passe", required: false %>
+            <%#= f.input :current_password, label: "Mot de passe actuel", hint: "Nous avons besoin de votre mot de passe actuel pour confirmer.", required: true %>
+          </div>
+
+          <div class="form-actions">
+            <%= f.button :submit, "Sauvegarder" %>
+          </div>
+        <% end %>
+
+        <h4 class="text-center" >Supprimer mon compte</h4>
+
+        <p class="text-center">Vous n'êtes pas satisfait ? <%= link_to " Supprimer mon compte", registration_path(resource_name), data: { confirm: "Etes-vous sûr ?" }, method: :delete %></p>
+
+        <h4 class="text-center" ><%= link_to "Retour", :back %></h4>
+
+      </div>
+    </div>
   </div>
-
-  <div class="form-actions">
-    <%= f.button :submit, "Update" %>
-  </div>
-<% end %>
-
-<h3>Cancel my account</h3>
-
-<p>Unhappy? <%= link_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
+</div>

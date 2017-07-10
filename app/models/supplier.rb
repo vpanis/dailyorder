@@ -1,4 +1,4 @@
-class Provider < ApplicationRecord
+class Supplier < ApplicationRecord
   has_many :users
   has_many :relations, dependent: :destroy
   has_many :products, dependent: :destroy

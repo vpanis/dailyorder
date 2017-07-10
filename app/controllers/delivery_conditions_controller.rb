@@ -1,0 +1,2 @@
+class DeliveryConditionsController < ApplicationController
+end
