@@ -26,12 +26,12 @@ vincent_profile = Profile.create!(user: vincent, restaurant: qg, role: "Administ
 
 puts 'Creating Suppliers...'
 
-tribolet = Supplier.create!(email: 'vpanis@laposte.net', name: "Ets Tribolet", address: "30 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.91", sector: "Boucherie", siret: "798 578 444 000 20")
-tafanel = Supplier.create!(email: 'vpanis@laposte.net', name: "Ets Tafanel", address: "31 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.92", sector: "Boissons", siret: "798 578 333 000 20")
-richard = Supplier.create!(email: 'vpanis@laposte.net', name: "Cafés Richard", address: "32 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.93", sector: "Cafés", siret: "798 578 222 000 20")
-joceane = Supplier.create!(email: 'vpanis@laposte.net', name: "J'océane", address: "33 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.94", sector: "Poissonnerie", siret: "798 578 111 000 20")
-brument = Supplier.create!(email: 'vpanis@laposte.net', name: "Benoit Brument Vins", address: "34 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.95", sector: "Vins et spiritueux", siret: "798 578 666 000 20")
-vergers = Supplier.create!(email: 'vpanis@laposte.net', name: "Les Vergers de Boulogne", address: "35 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.96", sector: "Fruits et légumes", siret: "798 578 777 000 20")
+tribolet = Supplier.create!(email: 'alain@laposte.net', name: "Ets Tribolet", address: "30 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.91", sector: "Boucherie", siret: "798 578 444 000 20")
+tafanel = Supplier.create!(email: 'christian@laposte.net', name: "Ets Tafanel", address: "31 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.92", sector: "Boissons", siret: "798 578 333 000 20")
+richard = Supplier.create!(email: 'arnaud@laposte.net', name: "Cafés Richard", address: "32 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.93", sector: "Cafés", siret: "798 578 222 000 20")
+joceane = Supplier.create!(email: 'dalila@laposte.net', name: "J'océane", address: "33 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.94", sector: "Poissonnerie", siret: "798 578 111 000 20")
+brument = Supplier.create!(email: 'benoit@laposte.net', name: "Benoit Brument Vins", address: "34 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.95", sector: "Vins et spiritueux", siret: "798 578 666 000 20")
+vergers = Supplier.create!(email: 'eric@laposte.net', name: "Les Vergers de Boulogne", address: "35 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.96", sector: "Fruits et légumes", siret: "798 578 777 000 20")
 
 puts 'Creating Relations...'
 

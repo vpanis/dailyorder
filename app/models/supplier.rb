@@ -1,5 +1,5 @@
 class Supplier < ApplicationRecord
-  searchkick
+  # searchkick
   has_many :profiles
   has_many :users, through: :profiles
   has_many :relations, dependent: :destroy
@@ -13,6 +13,7 @@ class Supplier < ApplicationRecord
   has_many :order_lines, through: :orders
 
   validates :email, :name, :address, :zip, :locality, :phone_number, :siret, presence: true
+  validates :email, uniqueness: true
   validates :sector, inclusion: { in: ["Boucherie", "Poissonnerie", "Epicerie", "Crèmerie", "Fruits et légumes", "Boissons", "Vins et spiritueux", "Cafés", "Autres"] }
 
   has_attachment :photo
