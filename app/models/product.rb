@@ -1,5 +1,9 @@
 class Product < ApplicationRecord
+  searchkick autocomplete: ['name'],
+             suggest: ['name']
+
   has_many :favorites, dependent: :destroy
+  has_many :relations, through: :favorites
   has_many :order_lines, dependent: :destroy
   has_many :pricing_conditions, dependent: :destroy
   belongs_to :supplier

@@ -14,7 +14,7 @@ class ApplicationController < ActionController::Base
 
   def configure_permitted_parameters
     # For additional in app/views/devise/registrations/edit.html.erb
-    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :position, :restaurant])
+    devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :restaurant])
   end
 
   include Pundit

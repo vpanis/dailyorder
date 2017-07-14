@@ -1,5 +1,7 @@
 class Supplier < ApplicationRecord
-  has_many :users
+  searchkick
+  has_many :profiles
+  has_many :users, through: :profiles
   has_many :relations, dependent: :destroy
   has_many :products, dependent: :destroy
 
@@ -10,7 +12,8 @@ class Supplier < ApplicationRecord
   has_many :restaurants, through: :relations
   has_many :order_lines, through: :orders
 
-  validates :email, :name, :address, :phone_number, :siret, presence: true
+  validates :email, :name, :address, :zip, :locality, :phone_number, :siret, presence: true
+  validates :sector, inclusion: { in: ["Boucherie", "Poissonnerie", "Epicerie", "Crèmerie", "Fruits et légumes", "Boissons", "Vins et spiritueux", "Cafés", "Autres"] }
 
   has_attachment :photo
 end

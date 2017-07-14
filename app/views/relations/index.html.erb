@@ -5,41 +5,31 @@
     <h2 class="text-center"><%= @restaurant.name %></h2>
     <h3 class="text-center">Sélectionner un fournisseur</h3>
 
-      <div class="row">
+    <div class="text-center btn-order">
+      <%= link_to "Ajouter un fournisseur", new_supplier_path, class: "btn btn-success" %>
+    </div>
+
+    <div class="row">
+
+      <% @suppliers.each do |supplier|%>
 
         <div class="col-xs-12 col-sm-4">
 
-          <%= link_to new_supplier_path do %>
+          <%= link_to new_restaurant_order_path(@restaurant, supplier_id: supplier), class: "card-link" do %>
 
-            <div class="card-dashboard flexbox text-center">
-              <h2 class="highlight" style= "margin-bottom: 20px">
-                Ajouter un fournisseur
-              </h2>
+            <div class="card-company">
+
+              <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= supplier.photo.nil? ? "" : (cl_image_path supplier.photo.public_id, width: 100, height: 100, crop: :fill) %>)"></div>
+
+              <h2 class="card-company-name"><%= supplier.name %></h2>
+
             </div>
 
           <% end %>
 
         </div>
 
-          <% @suppliers.each do |supplier|%>
-
-            <div class="col-xs-12 col-sm-4">
-
-              <%= link_to restaurant_relation_path(@restaurant, supplier), class: "card-link" do %>
-
-                  <div class="card-dashboard">
-
-                    <div class="card-dashboard-description">
-                      <h2 class="highlight"><%= supplier.name %></h2>
-                    </div>
-
-                  </div>
-
-              <% end %>
-
-            </div>
-
-          <% end %>
+      <% end %>
 
     </div>
   </div>

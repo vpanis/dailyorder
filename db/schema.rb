@@ -60,16 +60,6 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.index ["relation_id"], name: "index_favorites_on_relation_id", using: :btree
   end
 
-  create_table "groups", force: :cascade do |t|
-    t.string   "email"
-    t.string   "name"
-    t.string   "address"
-    t.string   "phone_number"
-    t.string   "siret"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-  end
-
   create_table "order_lines", force: :cascade do |t|
     t.integer  "product_id"
     t.integer  "order_id"
@@ -115,6 +105,16 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.index ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
   end
 
+  create_table "profiles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "restaurant_id"
+    t.string   "role"
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
+    t.index ["restaurant_id"], name: "index_profiles_on_restaurant_id", using: :btree
+    t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
+  end
+
   create_table "relations", force: :cascade do |t|
     t.integer  "restaurant_id"
     t.integer  "supplier_id"
@@ -129,19 +129,22 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.string   "email"
     t.string   "name"
     t.string   "address"
+    t.string   "zip"
+    t.string   "locality"
     t.string   "phone_number"
     t.string   "siret"
-    t.integer  "group_id"
     t.datetime "created_at",   null: false
     t.datetime "updated_at",   null: false
-    t.index ["group_id"], name: "index_restaurants_on_group_id", using: :btree
   end
 
   create_table "suppliers", force: :cascade do |t|
     t.string   "email"
     t.string   "name"
     t.string   "address"
+    t.string   "zip"
+    t.string   "locality"
     t.string   "phone_number"
+    t.string   "sector"
     t.string   "siret"
     t.boolean  "is_price_infos", default: false
     t.datetime "created_at",                     null: false
@@ -164,12 +167,8 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.string   "first_name"
     t.string   "last_name"
     t.string   "phone_number"
-    t.string   "position",               default: ""
-    t.string   "profile",                default: ""
-    t.integer  "group_id"
-    t.integer  "restaurant_id"
-    t.integer  "supplier_id"
     t.boolean  "admin",                  default: false
+    t.boolean  "is_supplier",            default: false
     t.string   "provider"
     t.string   "uid"
     t.string   "facebook_picture_url"
@@ -177,16 +176,6 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.datetime "token_expiry"
     t.index ["email"], name: "index_users_on_email", unique: true, using: :btree
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
-  end
-
-  create_table "working_relations", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "restaurant_id"
-    t.string   "role"
-    t.datetime "created_at",    null: false
-    t.datetime "updated_at",    null: false
-    t.index ["restaurant_id"], name: "index_working_relations_on_restaurant_id", using: :btree
-    t.index ["user_id"], name: "index_working_relations_on_user_id", using: :btree
   end
 
   add_foreign_key "delivery_conditions", "relations"
@@ -200,8 +189,8 @@ ActiveRecord::Schema.define(version: 20170708160209) do
   add_foreign_key "pricing_conditions", "products"
   add_foreign_key "pricing_conditions", "relations"
   add_foreign_key "products", "suppliers"
+  add_foreign_key "profiles", "restaurants"
+  add_foreign_key "profiles", "users"
   add_foreign_key "relations", "restaurants"
   add_foreign_key "relations", "suppliers"
-  add_foreign_key "working_relations", "restaurants"
-  add_foreign_key "working_relations", "users"
 end

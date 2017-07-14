@@ -1,0 +1,96 @@
+<div class="container">
+
+  <div class="box">
+
+    <div class="dashboard-head">
+      <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
+        <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
+          <i class="fa fa-pencil" aria-hidden="true"></i>
+        <% end %>
+      </div>
+      <div class="dashboard-head-text text-center">
+        <h2 class="dashboard-head-name"><%= @restaurant.name %></h2>
+        <%= link_to "Passer vos commandes", restaurant_relations_path(@restaurant), class: "btn btn-success dashboard-head-cta" %>
+      </div>
+    </div>
+
+    <div class="dashboard-body">
+      <div class="chapter">
+
+        <div class="chapter-head">
+
+          <h2 class="chapter-title">Utilisateurs (<%= @restaurant.users.size %>)</h2>
+
+          <%= link_to new_profile_path, class: "btn btn-primary chapter-link" do %>
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+          <% end %>
+
+        </div>
+
+        <% @profiles.each do |profile|%>
+          <div class="item">
+            <div class="item-visible-part">
+              <p><%= set_fullname(profile.user) %></p>
+              <p><i class="fa fa-eye" aria-hidden="true"></i></p>
+            </div>
+            <div class="item-invisible-part">
+              <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= profile.user.email %></p>
+              <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= profile.user.phone_number %></p>
+              <p>Profil : <%= profile.role %></p>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+
+      <div class="chapter">
+
+        <div class="chapter-head">
+
+          <h2 class="chapter-title">Fournisseurs (<%= @restaurant.suppliers.size %>)</h2>
+
+          <%= link_to new_supplier_path, class: "btn btn-primary chapter-link" do %>
+            <i class="fa fa-user-plus" aria-hidden="true"></i>
+          <% end %>
+
+        </div>
+
+
+        <% @suppliers.each do |supplier|%>
+          <div class="item">
+            <div class="item-visible-part">
+              <p><%= supplier.name %></p>
+              <p><i class="fa fa-eye" aria-hidden="true"></i></p>
+            </div>
+            <div class="item-invisible-part">
+              <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>
+              <p><i class="fa fa-phone" aria-hidden="true"></i>  : <%= supplier.phone_number %></p>
+              <p>Secteur : <%= supplier.sector %></p>
+              <p>Prix : <%= supplier.is_price_infos ? "Disponible" : "Non disponible" %></p>
+              <p>Conditions de livraison :</p>
+            </div>
+          </div>
+        <% end %>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+
+      $(".item-invisible-part").hide();
+
+      $(".item-visible-part").on('click', function () {
+
+          var $a = $(this).next();
+          $a.slideToggle(); //toggle the current one
+          $(".item-invisible-part").not($a).slideUp(); //hide the others
+
+      });
+
+    });
+  </script>
+<% end %>

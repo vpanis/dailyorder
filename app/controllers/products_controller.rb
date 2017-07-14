@@ -1,9 +1,23 @@
 class ProductsController < ApplicationController
 
   def index
-    @supplier = Supplier.find(params[:supplier_id])
     @products = policy_scope(Product)
-    @products = @supplier.products
+    if params[:query].present?
+      @products = Product.search(params[:query],
+                                     fields: [:name],
+                                     page: params[:page])
+    else
+      @products = Product.all.page params[:page]
+    end
+  end
+
+  def autocomplete
+    render json: Product.search(params[:query],
+                 autocomplete: true,
+                 fields: [:name],
+                 limit: 10).map { |product|
+                   product.name
+                 }
   end
 
   def show

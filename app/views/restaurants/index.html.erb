@@ -2,50 +2,43 @@
 
   <div class="box">
 
-    <h2 class="text-center"><%= current_user.group.name %></h2>
-    <h3 class="text-center">Sélectionner un restaurant</h3>
+    <% if !current_user.restaurants.first.nil? %>
+
+      <h2 class="text-center">Mes restaurants</h2>
+
+    <% end %>
+
+    <div class="text-center btn-order">
+      <%= link_to "Ajouter un restaurant", new_restaurant_path, class: "btn btn-success" %>
+    </div>
+
+    <% if @restaurants.first.nil? %>
+
+      <h2 class="text-center">Aucun restaurant répertorié</h2>
+
+    <% end %>
 
       <div class="row">
 
-        <div class="col-xs-12 col-sm-4">
+        <% @restaurants.each do |restaurant|%>
 
-          <%= link_to new_restaurant_path do %>
+          <div class="col-xs-12 col-sm-4">
 
-            <div class="card-dashboard flexbox text-center">
-              <h2 class="highlight" style= "margin-bottom: 20px">
-                Créer un restaurant
-              </h2>
-            </div>
+            <%= link_to restaurant_path(restaurant), class: "card-link" do %>
 
-          <% end %>
+                <div class="card-company">
 
-        </div>
+                  <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= restaurant.photo.nil? ? "" : (cl_image_path restaurant.photo.public_id, width: 100, height: 100, crop: :fill) %>);"></div>
 
-          <% @restaurants.each do |restaurant|%>
+                  <h2 class="card-company-name"><%= restaurant.name %></h2>
 
-            <div class="col-xs-12 col-sm-4">
+                </div>
 
-              <%= link_to restaurant_relations_path(restaurant), class: "card-link" do %>
+            <% end %>
 
-                  <div class="card-dashboard">
+          </div>
 
-                    <div class="card-dashboard-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= restaurant.photo.nil? ? "" : (cl_image_path restaurant.photo.public_id, width: 280, height: 250, crop: :fill) %>);"></div>
-
-                    <div class="card-dashboard-description">
-                      <h2 class="highlight"><%= restaurant.name %></h2>
-                    </div>
-
-                    <div class="card-dashboard-description">
-                      <i class="fa fa-user-plus" aria-hidden="true"></i>
-                    </div>
-
-                  </div>
-
-              <% end %>
-
-            </div>
-
-          <% end %>
+        <% end %>
 
     </div>
   </div>

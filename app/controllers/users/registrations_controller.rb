@@ -9,9 +9,13 @@ class Users::RegistrationsController < Devise::RegistrationsController
   # end
 
   # POST /resource
-  # def create
-  #   super
-  # end
+  def create
+    super
+    resource.first_name = params["user"]["first_name"]
+    resource.last_name = params["user"]["last_name"]
+    resource.phone_number = params["user"]["phone_number"]
+    resource.save
+  end
 
   # GET /resource/edit
   # def edit
@@ -20,12 +24,11 @@ class Users::RegistrationsController < Devise::RegistrationsController
 
   # PUT /resource
   def update
+    super
     resource.first_name = params["user"]["first_name"]
     resource.last_name = params["user"]["last_name"]
     resource.phone_number = params["user"]["phone_number"]
-    resource.position = params["user"]["position"]
     resource.save
-    super
   end
 
   # DELETE /resource

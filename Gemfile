@@ -12,7 +12,7 @@ gem 'devise-i18n'
 gem 'redis'
 
 gem "pundit"
-
+gem 'postmark-rails'
 gem 'omniauth-facebook'
 
 gem 'cloudinary', '1.1.7'
@@ -29,10 +29,14 @@ gem 'font-awesome-sass'
 gem 'simple_form'
 gem 'autoprefixer-rails'
 gem 'momentjs-rails', '>= 2.9.0'
+gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 
 # Gems to generate pdf files
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
+
+# ElasticSearch
+gem 'searchkick', '~> 1.3'
 
 group :development, :test do
   gem 'binding_of_caller'

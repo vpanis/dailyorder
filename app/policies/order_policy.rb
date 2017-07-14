@@ -1,27 +1,39 @@
 class OrderPolicy < ApplicationPolicy
   class Scope < Scope
     def resolve
-      scope
+      if user.admin
+        scope.all
+      else
+        scope.select { |record| record.relation.restaurant.users.include?(user) }
+      end
     end
   end
 
-  def index?
-    record.relation.restaurant.users.include?(user) || user.admin
+  def index_pending?
+    true
+  end
+
+  def index_validated?
+    true
+  end
+
+  def index_sent?
+    true
   end
 
   def new?
-    record.relation.restaurant.users.include?(user) || user.admin
+    true
   end
 
   def create?
-    record.relation.restaurant.users.include?(user) || user.admin
+    true
   end
 
   def update?
-    record.relation.restaurant.users.include?(user) || user.admin
+    true
   end
 
   def destroy?
-    record.relation.restaurant.users.include?(user) || user.admin
+    true
   end
 end

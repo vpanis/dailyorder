@@ -11,17 +11,26 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /fr/ do
     root to: 'pages#home'
 
-    resources :restaurants do
-      resources :relations do
-        resources :documents
+    resources :profiles
+
+    resources :products, :only => [:index] do
+      collection do
+        get :autocomplete
       end
-      resources :orders
+    end
+
+    resources :restaurants do
+      resources :relations, only: [:index]
+      get "index_pending" => "orders#index_pending"
+      get "index_validated" => "orders#index_validated"
+      get "index_sent" => "orders#index_sent"
+      resources :orders, only: [:new, :create, :edit, :update, :destroy]
+      resources :documents, only: [:show]
     end
 
     resources :suppliers do
-      resources :relations do
-        resources :documents
-      end
+      resources :relations
+      resources :documents
       resources :products
     end
   end

@@ -8,7 +8,7 @@
 
     <div class="row">
 
-      <%= form_tag restaurant_orders_path(@relation.restaurant) do %>
+      <%= form_tag restaurant_order_path(@restaurant, @order), method: :patch do %>
 
         <% if !@order_lines_promotions.first.nil? %>
           <div class="col-xs-12">
@@ -17,7 +17,8 @@
           <% @order_lines_promotions.each do |order_line_promotion| %>
             <div class="col-xs-12">
               <div class="card-product">
-              <%= fields_for 'order_lines_promotions[]', order_line_promotion do |f| %>
+              <%= fields_for 'order_lines[]', order_line_promotion do |f| %>
+
                 <%= f.text_field :product_id, value: order_line_promotion.product.id, class: "hidden" %>
                 <%= f.label :quantity, "#{order_line_promotion.product.name}", class: "title" %>
                 <%= f.number_field :quantity, min: 0, :step => order_line_promotion.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", placeholder: 0 %>
@@ -35,7 +36,8 @@
           <% @order_lines_favorites.each do |order_line_favorite| %>
             <div class="col-xs-12">
               <div class="card-product">
-              <%= fields_for 'order_lines_favorites[]', order_line_favorite do |f| %>
+              <%= fields_for 'order_lines[]', order_line_favorite do |f| %>
+
                 <%= f.text_field :product_id, value: order_line_favorite.product.id, class: "hidden" %>
                 <%= f.label :quantity, "#{order_line_favorite.product.name}", class: "title" %>
                 <%= f.number_field :quantity, min: 0, :step => order_line_favorite.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", placeholder: 0 %>
@@ -54,6 +56,7 @@
             <div class="col-xs-12">
               <div class="card-product">
               <%= fields_for 'order_lines[]', order_line do |f| %>
+
                 <%= f.text_field :product_id, value: order_line.product.id, class: "hidden" %>
                 <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
                 <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", placeholder: 0 %>
@@ -65,11 +68,15 @@
         <% end %>
 
         <%= hidden_field_tag(:relation_id, @relation.id) %>
-        <%= hidden_field_tag(:delivery_date, nil, options = { class: "datepicker_hidden_field" }) %>
+        <%= hidden_field_tag(:delivery_date, @order.delivery_date ? @order.delivery_date : nil, options = { class: "datepicker_hidden_field" }) %>
 
         <div class="col-xs-12 text-center">
-          <%= submit_tag("Enregistrer", :id=>"button-save", class: "btn btn-success btn-modal", :name=>"submit") %>
-          <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Commander</button>
+          <% if @order.status == "En cours" %>
+            <%= button_tag("Enregistrer", :id=>"button-submit", :name=>"submit", type: "submit", class: "btn btn-success btn-modal") %>
+            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Valider ma commande</button>
+          <% elsif @order.status == "Validée" %>
+            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Enregistrer les modifications</button>
+          <% end %>
         </div>
 
         <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
@@ -77,14 +84,14 @@
             <div class="modal-content">
               <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title" id="myModalLabel">Choississez la date de livraison</h4>
+                <h4 class="modal-title" id="myModalLabel">Choississez votre date de livraison</h4>
               </div>
               <div class="modal-body">
                 <div class="calendar text-center"></div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
-                <%= submit_tag("Valider", :id=>"button-submit", class: "btn btn-success", :name=>"submit") %>
+                <%= button_tag("Valider", :id=>"button-submit", :name=>"submit", type: "submit", class: "btn btn-success") %>
               </div>
             </div>
           </div>

@@ -6,5 +6,5 @@ class Order < ApplicationRecord
 
   delegate :restaurant, :to => :relation
 
-  validates :status, presence: true, inclusion: { in: ["Validée", "Envoyée", "En cours"] }
+  validates :status, presence: true, inclusion: { in: ["En cours", "Validée", "Envoyée"] }
 end

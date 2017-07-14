@@ -1,6 +1,6 @@
 class Restaurant < ApplicationRecord
-  has_many :working_relations
-  has_many :users, through: :working_relations
+  has_many :profiles, dependent: :destroy
+  has_many :users, through: :profiles
   has_many :relations, dependent: :destroy
 
   has_many :orders, through: :relations
@@ -11,9 +11,7 @@ class Restaurant < ApplicationRecord
   has_many :order_lines, through: :orders
   has_many :products, through: :order_lines
 
-  belongs_to :group, optional: true
-
-  validates :email, :name, :address, :phone_number, :siret, presence: true
+  validates :email, :name, :address, :zip, :locality, :phone_number, :siret, presence: true
   validates :email, uniqueness: true
 
   has_attachment :photo

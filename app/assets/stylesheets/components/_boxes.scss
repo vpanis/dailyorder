@@ -1,13 +1,12 @@
 .box {
   background-color: white;
-  border-top: solid $green;
+  border-top: solid 4px $green;
   margin-top: 20px;
   margin-bottom: 90px;
   padding: 15px 5px;
   box-shadow: 0 15px 35px rgba(0, 32, 126, 0.1), 0 5px 15px rgba(0, 32, 126, 0.1);
   border-radius: 0px 0px 6px 6px;
   h2 {
-    font-size: 26px;
     margin: 0px;
     padding: 5px;
   }

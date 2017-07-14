@@ -8,4 +8,8 @@ module UsersHelper
   def set_username(user)
     user.first_name.nil? ? user.email : user.first_name
   end
+
+  def set_fullname(user)
+    (user.first_name.nil? || user.last_name.nil?) ? user.email : "#{user.first_name} #{user.last_name}"
+  end
 end

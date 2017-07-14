@@ -1,0 +1,148 @@
+<div class="container">
+
+  <div class="box">
+
+  <h2 class="text-center">Mes commandes</h2>
+
+  <div class="text-center btn-order">
+    <%= link_to "Passer une nouvelle commande", restaurant_relations_path(@restaurant), class: "btn btn-success" %>
+  </div>
+
+    <div class="row">
+
+      <div class="col-xs-12">
+        <div class="orders-head">
+          <%= link_to "En cours", restaurant_index_pending_path(@restaurant), class: "tab active" %>
+          <%= link_to "Validées", restaurant_index_validated_path(@restaurant), class: "tab" %>
+          <%= link_to "Envoyées", restaurant_index_sent_path(@restaurant), class: "tab" %>
+        </div>
+      </div>
+
+      <% if !@orders_pending.first.nil? %>
+
+        <% @orders_pending.each do |order| %>
+
+          <div class="col-xs-12">
+
+            <div class="order">
+
+              <div class="order-top">
+
+                <div class="order-title">
+
+                  <p><%= "#{order.created_at.strftime("%d/%m/%Y")} - #{order.relation.supplier.name}" %></p>
+
+                  <p class="not-first"><%= order.created_at == order.updated_at ? "Crée le #{order.created_at.strftime("%d/%m/%Y à %H:%M")} par #{order.user.first_name}" : "Modifiée le #{order.updated_at.strftime("%d/%m/%Y à %H:%M")} par #{order.user.first_name}"%></p>
+
+                  <p class="not-first">Date de livraison : A définir lorsque vous validez</p>
+
+                </div>
+
+            </div>
+
+
+
+                <div class="order-body">
+
+                  <%= form_tag restaurant_order_path(@restaurant, order), method: :patch do %>
+                    <% order.order_lines.each do |order_line| %>
+                      <div class="col-xs-12">
+                        <div class="order-line">
+
+                          <%= fields_for 'order_lines[]', order_line do |f| %>
+
+                            <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
+                            <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", readonly: order.status == "Envoyée" ? true : false, placeholder: order_line.product.measuring_unit == "kgs" ? order_line.quantity.to_f : order_line.quantity.to_i %>
+                            <div class="unit"><%= order_line.product.measuring_unit %></div>
+                          <% end %>
+
+                        </div>
+                      </div>
+                    <% end %>
+                  <%= hidden_field_tag(:delivery_date, nil, options = { class: "datepicker_hidden_field" }) %>
+                </div>
+
+
+
+
+
+                <div class="order-footer">
+
+                  <div class="order-links">
+                    <%= link_to edit_restaurant_order_path(@restaurant, order), class: "order-link" do %>
+                      <i class="fa fa-pencil" aria-hidden="true"></i>
+                    <% end %>
+                    <label type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm">Valider cette commande</label>
+
+
+
+              <% end %>
+
+
+
+                    <%= button_to restaurant_order_path(@restaurant, order), method: :delete, class: "order-link" do %>
+                      <i class="fa fa-trash-o" aria-hidden="true"></i>
+                    <% end %>
+                  </div>
+
+                  <div class="modal fade bs-example-modal-sm" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel">
+                    <div class="modal-dialog modal-sm" role="document">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <label type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></label>
+                          <h4 class="modal-title" id="myModalLabel">Choississez votre date de livraison</h4>
+                        </div>
+                        <div class="modal-body">
+                          <div class="calendar text-center"></div>
+                        </div>
+                        <div class="modal-footer">
+                          <label type="button" class="btn btn-default" data-dismiss="modal">Retour</label>
+                          <%= submit_tag("Valider", :id=>"button-submit", class: "btn btn-success", :name=>"submit") %>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
+
+
+            </div>
+
+          </div>
+
+        <% end %>
+
+      <% end %>
+
+    </div>
+
+  </div>
+
+</div>
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+
+      $(".not-first").hide();
+      $(".order-body").hide();
+      $(".order-footer").hide();
+
+      $(".order-top").on('click', function () {
+
+          var $a = $(this).children(".order-title").children(".not-first");
+          $a.slideToggle(); //toggle the current one
+          $(".not-first").not($a).slideUp(); //hide the others
+          var $b = $(this).next();
+          $b.slideToggle(); //toggle the current one;
+          $(".order-body").not($b).slideUp(); //hide the others
+          var $c = $(this).next().next();
+          $c.slideToggle(); //toggle the current one;
+          $(".order-footer").not($c).slideUp(); //hide the others
+
+      });
+
+    });
+  </script>
+<% end %>

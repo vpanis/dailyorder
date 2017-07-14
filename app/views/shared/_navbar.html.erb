@@ -15,15 +15,48 @@
   <% end %>
 
   <!-- Middle Navigation -->
+
+
+<!-- = form_tag presenters_path, method: :get do
+    - if params[:query].present?
+      .btn-search.btn-clearsearch
+        = link_to "clear", presenters_path
+    - else
+      .search
+        Search
+    = text_field_tag :query, params[:query],
+                     id: "presenter_search",
+                     autocomplete: "off"
+    = submit_tag "go", class: "btn-search" -->
+
+
   <div class="navbar-wagon-middle">
     <!-- Search form -->
-    <form action="" class="navbar-wagon-search">
+    <%= form_tag products_path, method: :get, class: "navbar-wagon-search" do %>
+      <%= text_field_tag :query, params[:query],
+                        id: "product_search",
+                        autocomplete: "off",
+                        placeholder: "Trouver un produit",
+                        onfocus: "this.placeholder = ''",
+                        onblur: "this.placeholder = 'Trouver un produit'",
+                        class: "navbar-wagon-search-input" %>
+      <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
+        <i class="fa fa-search"></i>
+      <% end %>
+    <% end %>
+  </div>
+
+
+  <!-- <div class="navbar-wagon-middle"> -->
+    <!-- Search form -->
+    <!-- <form action="" class="navbar-wagon-search">
       <input type="text" class="navbar-wagon-search-input" placeholder="Trouver un produit">
       <button type="submit" class="navbar-wagon-search-btn">
         <i class="fa fa-search"></i>
       </button>
     </form>
-  </div>
+  </div> -->
+
 
   <!-- Right Navigation -->
   <div class="navbar-wagon-right hidden-xs hidden-sm">
@@ -56,7 +89,7 @@
             </li>
             <li>
               <% if current_user.restaurants.length == 1 %>
-                <%= link_to restaurant_orders_path(current_user.restaurants.first) do %>
+                <%= link_to restaurant_index_validated_path(current_user.restaurants.first) do %>
                   <i class="fa fa-home"></i>  <%= t(".profile", default: "Mes commandes") %>
                 <% end %>
               <% end %>
@@ -80,7 +113,7 @@
     <% else %>
 
       <!-- Login text link -->
-      <%= link_to t(".sign_in", default: "Me connecter"), new_user_session_path, class: "navbar-wagon-item navbar-wagon-link" %>
+      <%= link_to t(".sign_in", default: "Inscription"), new_user_registration_path, class: "navbar-wagon-item navbar-wagon-link" %>
 
     <% end %>
 
@@ -106,7 +139,7 @@
           </li>
           <li>
             <% if current_user.restaurants.length == 1 %>
-              <%= link_to restaurant_orders_path(current_user.restaurants.first) do %>
+              <%= link_to restaurant_index_validated_path(current_user.restaurants.first) do %>
                 <i class="fa fa-home"></i>  <%= t(".profile", default: "Mes commandes") %>
               <% end %>
             <% end %>

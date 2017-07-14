@@ -13,6 +13,19 @@ textarea {
 a {
   cursor: pointer;
   text-decoration: none;
+  &:focus {
+    outline: none;
+  }
+}
+button {
+  &:focus {
+    outline: none;
+  }
+}
+.btn {
+  &:focus {
+    outline: none;
+  }
 }
 
 // Body

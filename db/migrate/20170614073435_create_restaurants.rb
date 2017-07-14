@@ -4,9 +4,10 @@ class CreateRestaurants < ActiveRecord::Migration[5.0]
       t.string :email
       t.string :name
       t.string :address
+      t.string :zip
+      t.string :locality
       t.string :phone_number
       t.string :siret
-      t.references :group
 
       t.timestamps
     end

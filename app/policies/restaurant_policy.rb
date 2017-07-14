@@ -6,15 +6,30 @@ class RestaurantPolicy < ApplicationPolicy
   end
 
   def index?
-    user.group == record.group || user.admin
+    record.users.include?(user) || user.admin
+  end
+
+  def show?
+    record.users.include?(user) || user.admin
   end
 
   def new?
-    user.group == record.group || user.admin
+    true
   end
 
   def create?
-    user.group == record.group || user.admin
+    record.users.include?(user) || user.admin
   end
 
+  def edit?
+    record.users.include?(user) && Profile.where(user: user, restaurant: record).first.role == "Administrateur" || user.admin
+  end
+
+  def update?
+    record.users.include?(user) && Profile.where(user: user, restaurant: record).first.role == "Administrateur" || user.admin
+  end
+
+  def destroy?
+    record.users.include?(user) && Profile.where(user: user, restaurant: record).first.role == "Administrateur" || user.admin
+  end
 end
