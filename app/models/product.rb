@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
-  # searchkick autocomplete: ['name'],
-  #            suggest: ['name']
+  searchkick autocomplete: ['name'],
+             suggest: ['name']
 
   has_many :favorites, dependent: :destroy
   has_many :relations, through: :favorites

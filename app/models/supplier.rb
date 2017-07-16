@@ -1,5 +1,7 @@
 class Supplier < ApplicationRecord
-  # searchkick
+  include PgSearch
+  pg_search_scope :search_user, against: [ :email, :name ]
+
   has_many :profiles
   has_many :users, through: :profiles
   has_many :relations, dependent: :destroy
