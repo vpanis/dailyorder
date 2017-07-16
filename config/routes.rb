@@ -11,7 +11,6 @@ Rails.application.routes.draw do
   scope '(:locale)', locale: /fr/ do
     root to: 'pages#home'
 
-    resources :profiles
 
     resources :products, :only => [:index] do
       collection do
@@ -20,6 +19,7 @@ Rails.application.routes.draw do
     end
 
     resources :restaurants do
+      resources :profiles, only: [:index, :new, :create, :edit, :update]
       resources :relations, only: [:index]
       get "index_pending" => "orders#index_pending"
       get "index_validated" => "orders#index_validated"

@@ -67,8 +67,8 @@
 
 /* Navbar search form */
 .navbar-wagon-search {
-  width: 300px;
-  flex: 0 1 300px;
+  width: 180px;
+  flex: 0 1 180px;
   display: flex;
   justify-content: flex-end;
   padding: 0 10px;
@@ -85,7 +85,7 @@
   z-index: 1;
 }
 .navbar-wagon-search-input {
-  flex: 0 1 600px;
+  flex: 0 1 180px;
   transition: all 0.15s ease;
   line-height: 40px;
   font-weight: lighter;
@@ -98,6 +98,12 @@
 }
 .navbar-wagon-search-input:focus  {
   border: 1px solid #CCCCCC;
+}
+.navbar-wagon-search.large {
+  width: 250px;
+}
+.navbar-wagon-search-input.large {
+  flex: 0 1 250px;
 }
 
 /* Navbar dropdown menu */

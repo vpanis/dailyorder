@@ -16,7 +16,6 @@
 
   <!-- Middle Navigation -->
 
-
 <!-- = form_tag presenters_path, method: :get do
     - if params[:query].present?
       .btn-search.btn-clearsearch
@@ -29,23 +28,23 @@
                      autocomplete: "off"
     = submit_tag "go", class: "btn-search" -->
 
-
-  <div class="navbar-wagon-middle">
-    <!-- Search form -->
-    <%= form_tag products_path, method: :get, class: "navbar-wagon-search" do %>
-      <%= text_field_tag :query, params[:query],
-                        id: "product_search",
-                        autocomplete: "off",
-                        placeholder: "Trouver un produit",
-                        onfocus: "this.placeholder = ''",
-                        onblur: "this.placeholder = 'Trouver un produit'",
-                        class: "navbar-wagon-search-input" %>
-      <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
-        <i class="fa fa-search"></i>
+  <% if @restaurant && !current_page?(restaurant_profiles_path(@restaurant)) %>
+    <div class="navbar-wagon-middle">
+      <!-- Search form -->
+      <%= form_tag products_path, method: :get, class: "navbar-wagon-search" do %>
+        <%= text_field_tag :query, params[:query],
+                          id: "product_search",
+                          autocomplete: "off",
+                          placeholder: "Trouver un produit",
+                          onfocus: "this.placeholder = ''",
+                          onblur: "this.placeholder = 'Trouver un produit'",
+                          class: "navbar-wagon-search-input" %>
+        <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
+          <i class="fa fa-search"></i>
+        <% end %>
       <% end %>
-    <% end %>
-  </div>
-
+    </div>
+  <% end %>
 
   <!-- <div class="navbar-wagon-middle"> -->
     <!-- Search form -->

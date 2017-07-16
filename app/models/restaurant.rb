@@ -13,6 +13,7 @@ class Restaurant < ApplicationRecord
 
   validates :email, :name, :address, :zip, :locality, :phone_number, :siret, presence: true
   validates :email, uniqueness: true
+  validates_length_of :name, :maximum => 25
 
   has_attachment :photo
 end

@@ -1,0 +1,40 @@
+.item-user {
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: $bg;
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+  }
+}
+.item-user-photo {
+  flex: 0 0 60px;
+  width: 60px;
+  height: 60px;
+}
+.item-user-text {
+  flex: 1 0 auto;
+  padding: 0 10px;
+  p {
+    font-size: 12px;
+    margin: 0px;
+    line-height: 1.2;
+  }
+  p:first-child {
+    font-size: 16px;
+  }
+}
+.item-link {
+  opacity: 0.8;
+  &:hover {
+    opacity: 1;
+    text-decoration: none;
+  }
+}
+.item-user-icon {
+  p {
+    margin: 0 10px;
+  }
+}

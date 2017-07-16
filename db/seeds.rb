@@ -19,10 +19,11 @@ qg = Restaurant.create!(email: "panis.vincent@gmail.com", name: "La Quincailleri
 puts 'Creating Users...'
 
 vincent = User.create!(admin: true, email: "vpanis@hotmail.fr", password: "12345678", first_name: "Vincent", last_name: "Panis", phone_number: "06.84.73.96.18")
+annaelle = User.create!(email: "annaellerenault@gmail.com", password: "12345678", first_name: "Annaelle", last_name: "Renault", phone_number: "06.84.73.96.18")
 
 puts 'Creating Profiles...'
 
-vincent_profile = Profile.create!(user: vincent, restaurant: qg, role: "Administrateur")
+vincent_profile = Profile.create!(user: vincent, restaurant: qg, role: "Profil admin")
 
 puts 'Creating Suppliers...'
 

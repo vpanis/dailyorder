@@ -5,7 +5,7 @@ class RelationPolicy < ApplicationPolicy
     end
   end
 
-  def show?
+  def index?
     record.restaurant.users.include?(user) || user.admin
   end
 end

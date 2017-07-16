@@ -35,7 +35,8 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-# ElasticSearch
+# Gems to Search
+gem 'pg_search'
 gem 'searchkick', '~> 1.3'
 
 group :development, :test do
