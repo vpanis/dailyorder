@@ -17,13 +17,6 @@ class ApplicationController < ActionController::Base
     devise_parameter_sanitizer.permit(:account_update, keys: [:first_name, :last_name, :phone_number, :restaurant])
   end
 
-  def append_info_to_payload(payload)
-    super
-    payload[:request_id] = request.uuid
-    payload[:user_id] = current_user.id if current_user
-    payload[:visit_id] = ahoy.visit_id # if you use Ahoy
-  end
-
   include Pundit
 
   # Pundit: white-list approach.
