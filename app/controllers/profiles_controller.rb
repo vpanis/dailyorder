@@ -1,6 +1,5 @@
 class ProfilesController < ApplicationController
   before_action :set_profile, only: [:edit, :update]
-  before_action :set_user, only: [:new, :create]
 
   def index
     @profiles = policy_scope(Profile)
@@ -14,12 +13,14 @@ class ProfilesController < ApplicationController
   end
 
   def new
+    @user = User.find(params[:user_id])
     @restaurant = Restaurant.find(params[:restaurant_id])
     @profile = Profile.new
     authorize @profile
   end
 
   def create
+    @user = User.find(params[:profile][:user_id])
     @restaurant = Restaurant.find(params[:id])
     @profile = Profile.new()
     authorize @profile
@@ -44,10 +45,6 @@ class ProfilesController < ApplicationController
     @profile = Profile.find(params[:id])
     @restaurant = Restaurant.find(params[:restaurant_id])
     authorize @profile
-  end
-
-  def set_user
-    @user = User.find(params[:profile][:user_id])
   end
 
   def profile_params
