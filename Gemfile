@@ -36,7 +36,6 @@ gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
 # Gems to Search
-gem 'lograge'
 gem 'pg_search'
 gem 'searchkick', '~> 1.3'
 
