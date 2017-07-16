@@ -84,9 +84,10 @@ Rails.application.configure do
     config.logger = ActiveSupport::TaggedLogging.new(logger)
   end
 
+  config.lograge.enabled = true
   config.lograge.custom_options = lambda do |event|
-    options = {}
-    options[:search] = event.payload[:searchkick_runtime] if event.payload[:searchkick_runtime].to_f > 0
+    options = event.payload.slice(:request_id, :user_id, :visit_id)
+    options[:params] = event.payload[:params].except("controller", "action")
     options
   end
 
