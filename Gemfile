@@ -37,7 +37,6 @@ gem 'wkhtmltopdf-binary'
 
 # Gems to Search
 gem 'pg_search'
-gem 'searchkick', '~> 1.3'
 
 # Gems for asynchronism
 gem 'sidekiq'

@@ -1,6 +1,6 @@
 class Product < ApplicationRecord
-  searchkick autocomplete: ["name"],
-             suggest: ["name"]
+  include PgSearch
+  pg_search_scope :search_product, against: [ :name ]
 
   has_many :favorites, dependent: :destroy
   has_many :relations, through: :favorites

@@ -1,4 +1,6 @@
 class Supplier < ApplicationRecord
+  include PgSearch
+  pg_search_scope :search_supplier, against: [ :email, :name ]
 
   has_many :profiles
   has_many :users, through: :profiles
