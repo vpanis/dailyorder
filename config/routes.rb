@@ -25,7 +25,11 @@ Rails.application.routes.draw do
 
     resources :restaurants do
       resources :profiles, only: [:index, :new, :create, :edit, :update]
-      resources :suppliers, only: [:index]
+      resources :suppliers, only: [:index] do
+        collection do
+          get :autocomplete
+        end
+      end
       resources :relations, only: [:index]
       get "index_pending" => "orders#index_pending"
       get "index_validated" => "orders#index_validated"
