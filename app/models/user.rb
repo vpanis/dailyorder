@@ -2,7 +2,12 @@ class User < ApplicationRecord
   include PgSearch
   pg_search_scope :search_user,
                   against: [ :email, :first_name, :last_name ],
-                  using: { tsearch: { any_word: true } },
+                  using: {
+                    tsearch: { prefix: true, any_word: true },
+                    trigram: {
+                      only: [ :name ]
+                      }
+                    },
                   ignoring: :accents
 
   # after_create :send_welcome_email
