@@ -1,9 +1,14 @@
 class User < ApplicationRecord
   include PgSearch
-  pg_search_scope :search_user, against: [ :email, :first_name, :last_name ]
+  pg_search_scope :search_user,
+                  against: [ :email, :first_name, :last_name ],
+                  using: { tsearch: { prefix: true } },
+                  ignoring: :accents
+
   # after_create :send_welcome_email
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
+
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable,
          :omniauthable, omniauth_providers: [:facebook]

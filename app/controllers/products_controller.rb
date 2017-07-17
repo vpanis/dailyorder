@@ -3,11 +3,9 @@ class ProductsController < ApplicationController
   def index
     @products = policy_scope(Product)
     if params[:query].present?
-      @products = Product.search(params[:query],
-                                     fields: [:name],
-                                     page: params[:page])
+      @products = Product.search_product(params[:query])
     else
-      @products = Product.all.page params[:page]
+      @products = []
     end
   end
 

@@ -1,6 +1,9 @@
 class Product < ApplicationRecord
   include PgSearch
-  pg_search_scope :search_product, against: [ :name ]
+  pg_search_scope :search_product,
+                  against: [ :name ],
+                  using: { tsearch: { prefix: true } },
+                  ignoring: :accents
 
   has_many :favorites, dependent: :destroy
   has_many :relations, through: :favorites

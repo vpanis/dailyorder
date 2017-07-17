@@ -6,11 +6,9 @@ class SuppliersController < ApplicationController
     @restaurant = Restaurant.find(params[:restaurant_id])
     authorize @restaurant
     if params[:query].present?
-      @suppliers = Supplier.search(params[:query],
-                                     fields: [:name],
-                                     page: params[:page])
+      @suppliers = Supplier.search_supplier(params[:query])
     else
-      @suppliers = Supplier.all.page params[:page]
+      @suppliers = []
     end
   end
 

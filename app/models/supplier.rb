@@ -1,6 +1,9 @@
 class Supplier < ApplicationRecord
   include PgSearch
-  pg_search_scope :search_supplier, against: [ :email, :name ]
+  pg_search_scope :search_supplier,
+                  against: [ email: 'B', name: 'A' ],
+                  using: { tsearch: { prefix: true },
+                  ignoring: :accents
 
   has_many :profiles
   has_many :users, through: :profiles
