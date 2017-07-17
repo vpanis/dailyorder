@@ -34,7 +34,7 @@
       <%= form_tag products_path, method: :get, class: "navbar-wagon-search" do %>
         <%= text_field_tag :query, params[:query],
                           id: "product_search",
-                          autocomplete: "off",
+                          autocomplete: true,
                           placeholder: "Trouver un produit",
                           onfocus: "this.placeholder = ''",
                           onblur: "this.placeholder = 'Trouver un produit'",

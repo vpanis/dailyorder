@@ -25,7 +25,7 @@
         <%= form_tag restaurant_suppliers_path(@restaurant), method: :get, class: "navbar-wagon-search" do %>
           <%= text_field_tag :query, params[:query],
                             id: "product_search",
-                            autocomplete: "off",
+                            autocomplete: true,
                             placeholder: "Trouver un fournisseur",
                             onfocus: "this.placeholder = ''",
                             onblur: "this.placeholder = 'Trouver un fournisseur'",
