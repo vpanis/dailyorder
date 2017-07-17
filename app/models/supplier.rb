@@ -1,6 +1,4 @@
 class Supplier < ApplicationRecord
-  searchkick autocomplete: ["name"],
-             suggest: ["name"]
 
   has_many :profiles
   has_many :users, through: :profiles
