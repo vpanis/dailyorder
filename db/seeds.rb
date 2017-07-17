@@ -1,7 +1,7 @@
 puts 'Cleaning DB...'
 
-User.destroy_all
 Profile.destroy_all
+User.destroy_all
 Restaurant.destroy_all
 Supplier.destroy_all
 Relation.destroy_all
