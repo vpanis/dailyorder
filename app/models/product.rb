@@ -2,7 +2,7 @@ class Product < ApplicationRecord
   include PgSearch
   pg_search_scope :search_product,
                   against: [ :name ],
-                  using: { tsearch: { prefix: true } },
+                  using: { tsearch: { any_word: true } },
                   ignoring: :accents
 
   has_many :favorites, dependent: :destroy
