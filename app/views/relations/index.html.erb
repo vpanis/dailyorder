@@ -3,31 +3,40 @@
   <div class="box">
 
     <h2 class="text-center"><%= @restaurant.name %></h2>
-    <h3 class="text-center">Sélectionner un fournisseur</h3>
 
     <div class="text-center btn-order">
       <%= link_to "Ajouter un fournisseur", new_supplier_path, class: "btn btn-success" %>
     </div>
 
+    <h3 class="text-center" style="margin-top: 15px;">Sélectionner un fournisseur</h3>
+
     <div class="row">
 
-      <% @suppliers.each do |supplier|%>
+      <% if @suppliers.first.nil? %>
 
-        <div class="col-xs-12 col-sm-4">
+        <h3 class="text-center" style="margin-top: 20px;">Aucun fournisseur répertorié</h3>
 
-          <%= link_to new_restaurant_order_path(@restaurant, supplier_id: supplier), class: "card-link" do %>
+      <% else %>
 
-            <div class="card-company">
+        <% @suppliers.each do |supplier|%>
 
-              <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= supplier.photo.nil? ? "" : (cl_image_path supplier.photo.public_id, width: 100, height: 100, crop: :fill) %>)"></div>
+          <div class="col-xs-12 col-sm-4">
 
-              <h2 class="card-company-name"><%= supplier.name %></h2>
+            <%= link_to new_restaurant_order_path(@restaurant, supplier_id: supplier), class: "card-link" do %>
 
-            </div>
+              <div class="card-company">
 
-          <% end %>
+                <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= supplier.photo.nil? ? "" : (cl_image_path supplier.photo.public_id, width: 100, height: 100, crop: :fill) %>)"></div>
 
-        </div>
+                <h2 class="card-company-name"><%= supplier.name %></h2>
+
+              </div>
+
+            <% end %>
+
+          </div>
+
+        <% end %>
 
       <% end %>
 

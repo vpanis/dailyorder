@@ -4,6 +4,7 @@ class RestaurantsController < ApplicationController
   def index
     @restaurants = policy_scope(Restaurant)
     @restaurants = current_user.restaurants
+    @profiles = current_user.profiles
   end
 
   def show
@@ -19,7 +20,7 @@ class RestaurantsController < ApplicationController
   def create
     @restaurant = Restaurant.new(restaurant_params)
     @restaurant = current_user.restaurants.build(restaurant_params)
-    @working_relation = Profile.create(user: current_user, restaurant: @restaurant, role: "Administrateur")
+    @profile = Profile.create(user: current_user, restaurant: @restaurant, role: "Profil admin")
     authorize @restaurant
     if @restaurant.save
       RestaurantMailer.restaurant_creation_confirmation(current_user, @restaurant).deliver_later

@@ -6,4 +6,9 @@ class RelationsController < ApplicationController
     @relations = policy_scope(Relation)
     @relations = Relation.where(restaurant: @restaurant)
   end
+
+  def create
+    raise
+    redirect_to restaurant_path(@restaurant)
+  end
 end

@@ -1,6 +1,19 @@
 class SuppliersController < ApplicationController
   before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
 
+  def index
+    @suppliers = policy_scope(Supplier)
+    @restaurant = Restaurant.find(params[:restaurant_id])
+    authorize @restaurant
+    if params[:query].present?
+      @suppliers = Supplier.search(params[:query],
+                                     fields: [:name],
+                                     page: params[:page])
+    else
+      @suppliers = Supplier.all.page params[:page]
+    end
+  end
+
   def show
   end
 

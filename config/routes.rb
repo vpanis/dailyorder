@@ -17,7 +17,6 @@ Rails.application.routes.draw do
 
     root to: 'pages#home'
 
-
     resources :products, :only => [:index] do
       collection do
         get :autocomplete
@@ -26,6 +25,7 @@ Rails.application.routes.draw do
 
     resources :restaurants do
       resources :profiles, only: [:index, :new, :create, :edit, :update]
+      resources :suppliers, only: [:index]
       resources :relations, only: [:index]
       get "index_pending" => "orders#index_pending"
       get "index_validated" => "orders#index_validated"

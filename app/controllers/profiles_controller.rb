@@ -21,7 +21,7 @@ class ProfilesController < ApplicationController
 
   def create
     @user = User.find(params[:profile][:user_id])
-    @restaurant = Restaurant.find(params[:id])
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @profile = Profile.new()
     authorize @profile
     @profile.restaurant = @restaurant

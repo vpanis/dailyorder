@@ -18,26 +18,28 @@
         </div>
       </div>
       <h2 class="dashboard-head-name"><%= @restaurant.name %></h2>
-      <p class="text-center" style="font-size: 14px; margin: 10px;">Rechercher un utilisateur pour lui autoriser l'accès à la plateforme de commande.</p>
+      <p class="text-center" style="font-size: 14px; margin: 10px;">Rechercher un fournisseur.</p>
       <div class="navbar-wagon-middle text-center"">
+
         <!-- Search form -->
-        <%= form_tag restaurant_profiles_path(@restaurant), method: :get, class: "navbar-wagon-search large" do %>
+        <%= form_tag restaurant_suppliers_path(@restaurant), method: :get, class: "navbar-wagon-search" do %>
           <%= text_field_tag :query, params[:query],
                             id: "product_search",
                             autocomplete: "off",
-                            placeholder: "Taper un email ou un nom",
+                            placeholder: "Trouver un fournisseur",
                             onfocus: "this.placeholder = ''",
-                            onblur: "this.placeholder = 'Taper un email ou un nom'",
-                            class: "navbar-wagon-search-input large" %>
+                            onblur: "this.placeholder = 'Trouver un fournisseur'",
+                            class: "navbar-wagon-search-input" %>
           <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
             <i class="fa fa-search"></i>
           <% end %>
         <% end %>
+
       </div>
     </div>
 
 
-    <% if @users.first.nil? %>
+    <% if @suppliers.first.nil? %>
 
       <p class="text-center" style="font-size: 14px; margin: 10px;">Aucun résultat de recherche.</p>
 
@@ -48,24 +50,18 @@
       <div class="dashboard-body">
         <div class="chapter">
 
-          <% @users.each do |user|%>
+          <% @suppliers.each do |supplier|%>
 
-            <%= link_to Profile.find_by(user: user, restaurant: @restaurant).nil? ? new_restaurant_profile_path(@restaurant, {user_id: user.id}) : edit_restaurant_profile_path(@restaurant, Profile.find_by(user: user, restaurant: @restaurant), {user_id: user.id}), class: "item-link" do %>
+            <%= link_to Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? new_restaurant_relation_path(@restaurant) : edit_restaurant_relation_path(@restaurant, Relation.find_by(supplier: supplier, restaurant: @restaurant)), class: "item-link" do %>
 
               <div class="item-user">
-                <%= image_tag set_user_photo(user), class: "item-user-photo" %>
                 <div class="item-user-text">
-                  <p><%= set_fullname(user) %></p>
-                  <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= user.email %></p>
-                  <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= user.phone_number %></p>
-                  <% if !Profile.find_by(user: user, restaurant: @restaurant).nil? %>
-                    <p>Profil : <%= Profile.find_by(user: user, restaurant: @restaurant).role %></p>
-                  <% else %>
-                    <p>Profil non autorisé</p>
-                  <% end %>
+                  <p><%= supplier.name %></p>
+                  <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>
+                  <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= supplier.phone_number %></p>
                 </div>
                 <div class="item-user-icon">
-                  <% if !Profile.find_by(user: user, restaurant: @restaurant).nil? %>
+                  <% if !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? %>
                     <p class="unlock"><i class="fa fa-unlock" aria-hidden="true"></i></p>
                   <% else %>
                     <p class="lock"><i class="fa fa-lock" aria-hidden="true"></i></p>

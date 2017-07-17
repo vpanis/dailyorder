@@ -32,12 +32,10 @@ ActiveRecord::Schema.define(version: 20170708160209) do
 
   create_table "delivery_conditions", force: :cascade do |t|
     t.integer  "relation_id"
-    t.datetime "order_day"
     t.datetime "order_deadline"
-    t.datetime "delivery_day"
-    t.datetime "delivery_deadline"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
+    t.datetime "delivery_date"
+    t.datetime "created_at",     null: false
+    t.datetime "updated_at",     null: false
     t.index ["relation_id"], name: "index_delivery_conditions_on_relation_id", using: :btree
   end
 

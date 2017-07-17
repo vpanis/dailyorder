@@ -27,6 +27,20 @@ button {
     outline: none;
   }
 }
+.link-to {
+  color: #469AE0;
+  text-decoration: none;
+  background-color: Transparent;
+  background-repeat:no-repeat;
+  border: none;
+  cursor:pointer;
+  overflow: hidden;
+  outline:none;
+  &:hover {
+    color: #1f74ba;
+    text-decoration: none;
+  }
+}
 
 // Body
 .highlight {

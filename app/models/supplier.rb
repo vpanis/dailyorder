@@ -1,6 +1,6 @@
 class Supplier < ApplicationRecord
-  include PgSearch
-  pg_search_scope :search_user, against: [ :email, :name ]
+  searchkick autocomplete: ["email", "name", "sector"],
+             suggest: ["email", "name", "sector"]
 
   has_many :profiles
   has_many :users, through: :profiles

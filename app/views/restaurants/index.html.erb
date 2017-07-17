@@ -2,7 +2,7 @@
 
   <div class="box">
 
-    <% if !current_user.restaurants.first.nil? %>
+    <% if !@profiles.first.nil? %>
 
       <h2 class="text-center">Mes restaurants</h2>
 
@@ -12,25 +12,25 @@
       <%= link_to "Ajouter un restaurant", new_restaurant_path, class: "btn btn-success" %>
     </div>
 
-    <% if @restaurants.first.nil? %>
+    <% if @profiles.first.nil? %>
 
-      <h2 class="text-center">Aucun restaurant répertorié</h2>
+      <h3 class="text-center" style="margin-top: 20px;">Aucun restaurant répertorié</h3>
 
     <% end %>
 
       <div class="row">
 
-        <% @restaurants.each do |restaurant|%>
+        <% @profiles.each do |profile|%>
 
           <div class="col-xs-12 col-sm-4">
 
-            <%= link_to restaurant_path(restaurant), class: "card-link" do %>
+            <%= link_to restaurant_path(profile.restaurant), class: "card-link" do %>
 
                 <div class="card-company">
 
-                  <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= restaurant.photo.nil? ? "" : (cl_image_path restaurant.photo.public_id, width: 100, height: 100, crop: :fill) %>);"></div>
+                  <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= profile.restaurant.photo.nil? ? "" : (cl_image_path profile.restaurant.photo.public_id, width: 100, height: 100, crop: :fill) %>);"></div>
 
-                  <h2 class="card-company-name"><%= restaurant.name %></h2>
+                  <h2 class="card-company-name"><%= profile.restaurant.name %></h2>
 
                 </div>
 

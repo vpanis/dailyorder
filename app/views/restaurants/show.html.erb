@@ -3,12 +3,22 @@
   <div class="box">
 
     <div class="dashboard-head">
-      <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
-        <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
-          <i class="fa fa-pencil" aria-hidden="true"></i>
-        <% end %>
+      <div style="display: flex; justify-content: space-between; width: 100%;">
+        <div>
+          <%= link_to restaurants_path, class: "link-to" do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i> Retour
+          <% end %>
+        </div>
+        <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
+          <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          <% end %>
+        </div>
+        <div style="width: 68.39px;">
+        </div>
       </div>
       <div class="dashboard-head-text text-center">
+        <h2 class="dashboard-head-name" style="margin: 0px;">Tableau de Bord</h2>
         <h2 class="dashboard-head-name"><%= @restaurant.name %></h2>
         <%= link_to "Passer vos commandes", restaurant_relations_path(@restaurant), class: "btn btn-success dashboard-head-cta" %>
       </div>
@@ -28,19 +38,21 @@
         </div>
 
         <% @profiles.each do |profile|%>
-          <div class="item">
-            <div class="item-visible-part">
-              <p><%= set_fullname(profile.user) %></p>
-              <%= link_to edit_restaurant_profile_path(@restaurant, profile) do %>
-                <p><i class="fa fa-eye" aria-hidden="true"></i></p>
-              <% end %>
+
+          <%= link_to @restaurant.profiles.select { |p| p.role == "Profil admin" }.size == 1 ? (profile.role == "Profil admin" ? "#" : edit_restaurant_profile_path(@restaurant, profile, {user_id: profile.user.id})) : edit_restaurant_profile_path(@restaurant, profile, {user_id: profile.user.id}), class: "item-link" do %>
+
+            <div class="item-user">
+              <%= image_tag set_user_photo(profile.user), class: "item-user-photo" %>
+              <div class="item-user-text">
+                <p><%= set_fullname(profile.user) %></p>
+                <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= profile.user.email %></p>
+                <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= profile.user.phone_number %></p>
+                <p>Profil : <%= profile.role %></p>
+              </div>
             </div>
-            <div class="item-invisible-part">
-              <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= profile.user.email %></p>
-              <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= profile.user.phone_number %></p>
-              <p>Profil : <%= profile.role %></p>
-            </div>
-          </div>
+
+          <% end %>
+
         <% end %>
 
       </div>
@@ -51,7 +63,7 @@
 
           <h2 class="chapter-title">Fournisseurs (<%= @restaurant.suppliers.size %>)</h2>
 
-          <%= link_to new_supplier_path, class: "btn btn-primary chapter-link" do %>
+          <%= link_to restaurant_suppliers_path(@restaurant), class: "btn btn-primary chapter-link" do %>
             <i class="fa fa-user-plus" aria-hidden="true"></i>
           <% end %>
 
@@ -62,9 +74,6 @@
           <div class="item">
             <div class="item-visible-part">
               <p><%= supplier.name %></p>
-              <%= link_to "#" do %>
-                <p><i class="fa fa-eye" aria-hidden="true"></i></p>
-              <% end %>
             </div>
             <div class="item-invisible-part">
               <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>
