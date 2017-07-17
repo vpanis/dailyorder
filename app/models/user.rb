@@ -39,9 +39,9 @@ class User < ApplicationRecord
     return user
   end
 
-  # private
+  private
 
-  # def send_welcome_email
-  #   UserMailer.welcome(self).deliver_now
-  # end
+  def send_welcome_email
+    UserMailer.welcome(self.id).deliver_later
+  end
 end

@@ -22,7 +22,7 @@ class RestaurantsController < ApplicationController
     @working_relation = Profile.create(user: current_user, restaurant: @restaurant, role: "Administrateur")
     authorize @restaurant
     if @restaurant.save
-      # RestaurantMailer.restaurant_creation_confirmation(current_user, @restaurant).deliver_now
+      RestaurantMailer.restaurant_creation_confirmation(current_user, @restaurant).deliver_later
       redirect_to restaurant_path(@restaurant)
     else
       render :new

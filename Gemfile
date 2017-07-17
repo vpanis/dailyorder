@@ -39,6 +39,10 @@ gem 'wkhtmltopdf-binary'
 gem 'pg_search'
 gem 'searchkick', '~> 1.3'
 
+# Gems for asynchronism
+gem 'sidekiq'
+gem 'sidekiq-failures', github: 'mhfs/sidekiq-failures'
+
 group :development, :test do
   gem 'binding_of_caller'
   gem 'better_errors'

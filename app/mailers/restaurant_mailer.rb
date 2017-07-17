@@ -1,7 +1,7 @@
 class RestaurantMailer < ApplicationMailer
-  def restaurant_creation_confirmation(user, restaurant)
-    @restaurant = restaurant
-    @user = user
+  def restaurant_creation_confirmation(user_id, restaurant_id)
+    @user = User.find(user_id)
+    @restaurant = Restaurant.find(restaurant_id)
 
     mail(
       to:       @user.email,
