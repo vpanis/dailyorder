@@ -68,14 +68,14 @@
         <% end %>
 
         <%= hidden_field_tag(:relation_id, @relation.id) %>
-        <%= hidden_field_tag(:delivery_date, @order.delivery_date ? @order.delivery_date : nil, options = { class: "datepicker_hidden_field" }) %>
+        <%= hidden_field_tag(:delivery_date, @order.delivery_date, options = { class: "datepicker_hidden_field" }) %>
 
         <div class="col-xs-12 text-center">
           <% if @order.status == "En cours" %>
             <%= button_tag("Enregistrer", :id=>"button-submit", :name=>"submit", type: "submit", class: "btn btn-success btn-modal") %>
-            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Valider ma commande</button>
+            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Valider</button>
           <% elsif @order.status == "Validée" %>
-            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Enregistrer les modifications</button>
+            <button type="button" class="btn btn-success btn-modal" data-toggle="modal" data-target=".bs-example-modal-sm">Enregistrer</button>
           <% end %>
         </div>
 
@@ -86,12 +86,12 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Choississez votre date de livraison</h4>
               </div>
-              <div class="modal-body">
-                <div class="calendar text-center"></div>
+              <div class="modal-body text-center">
+                <div class="calendar" style="display: inline-block;"></div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
-                <%= button_tag("Valider", :id=>"button-submit", :name=>"submit", type: "submit", class: "btn btn-success") %>
+                <%= button_tag("Valider", type: "submit", :id=>"button-submit", class: "btn btn-success", :name=>"submit") %>
               </div>
             </div>
           </div>
@@ -102,3 +102,30 @@
     </div>
   </div>
 </div>
+
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+
+        $('.calendar').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            startDate: "+1d",
+            daysOfWeekDisabled: [0],
+            todayHighlight: true,
+            multidate: false,
+            language: 'fr',
+        });
+
+        $('.calendar').datepicker();
+        $('.calendar').on('changeDate', function() {
+            $('.datepicker_hidden_field').val(
+                $('.calendar').datepicker('getFormattedDate')
+            );
+        });
+
+    });
+
+  </script>
+<% end %>

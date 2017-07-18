@@ -49,25 +49,25 @@ entrecote = Product.create!(name: "Entrecôte boeuf 300g", measuring_unit: "kgs"
 onglet = Product.create!(name: "Onglet veau mi-par.", measuring_unit: "kgs", supplier: tribolet)
 semelle = Product.create!(name: "Semelle de boeuf", measuring_unit: "kgs", supplier: tribolet)
 
-coca = Product.create!(name: "Coca 33cl bt v", measuring_unit: "caisses(24bts)", supplier: tafanel)
-perrier = Product.create!(name: "Perrier 33cl bt v", measuring_unit: "caisses(24bts)", supplier: tafanel)
-orangina = Product.create!(name: "Orangina 33cl bt v", measuring_unit: "caisses(24bts)", supplier: tafanel)
+coca = Product.create!(name: "Coca 33cl bt v", measuring_unit: "c(24)", supplier: tafanel)
+perrier = Product.create!(name: "Perrier 33cl bt v", measuring_unit: "c(24)", supplier: tafanel)
+orangina = Product.create!(name: "Orangina 33cl bt v", measuring_unit: "c(24)", supplier: tafanel)
 
-noir = Product.create!(name: "Perle Noire grain 1kg", measuring_unit: "paquets", supplier: richard)
-deca = Product.create!(name: "Déca moulu 500gr", measuring_unit: "paquets", supplier: richard)
-chocolat = Product.create!(name: "Chocolat poudre 500g", measuring_unit: "boites", supplier: richard)
+noir = Product.create!(name: "Perle Noire grain 1kg", measuring_unit: "paq.", supplier: richard)
+deca = Product.create!(name: "Déca moulu 500gr", measuring_unit: "paq.", supplier: richard)
+chocolat = Product.create!(name: "Chocolat poudre 500g", measuring_unit: "boit.", supplier: richard)
 
 saumon = Product.create!(name: "Filet de saumon", measuring_unit: "kgs", supplier: joceane)
 lieu = Product.create!(name: "Pavé de lieu noir", measuring_unit: "kgs", supplier: joceane)
 eglefin = Product.create!(name: "Filet d'eglefin", measuring_unit: "kgs", supplier: joceane)
 
-rhone = Product.create!(name: "Côte Rhone Vill.", measuring_unit: "cartons(6bts)", supplier: brument)
-rioja = Product.create!(name: "Rioja AOC", measuring_unit: "cartons(6bts)", supplier: brument)
-brouilly = Product.create!(name: "Brouilly AOC", measuring_unit: "cartons(6bts)", supplier: brument)
+rhone = Product.create!(name: "Côte Rhone Vill.", measuring_unit: "c(6)", supplier: brument)
+rioja = Product.create!(name: "Rioja AOC", measuring_unit: "c(6)", supplier: brument)
+brouilly = Product.create!(name: "Brouilly AOC", measuring_unit: "c(6)", supplier: brument)
 
-tomate = Product.create!(name: "Tomates", measuring_unit: "colis", supplier: vergers)
-batavia = Product.create!(name: "Batavia", measuring_unit: "colis", supplier: vergers)
-chene = Product.create!(name: "Feuille de chêne", measuring_unit: "colis", supplier: vergers)
+tomate = Product.create!(name: "Tomates", measuring_unit: "col.", supplier: vergers)
+batavia = Product.create!(name: "Batavia", measuring_unit: "col.", supplier: vergers)
+chene = Product.create!(name: "Feuille de chêne", measuring_unit: "col.", supplier: vergers)
 
 puts 'Creating Favorites...'
 

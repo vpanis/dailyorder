@@ -55,24 +55,21 @@ h2.dashboard-head-name {
     margin: 0px;
     font-size: 18px;
   }
-  a p {
+  i {
     font-size: 20px;
     margin: 0px 10px;
-    color: #469AE0;
-    &:hover {
-      color: #1f74ba;
-    }
+    color: orange;
   }
-  a p.unlock {
-    font-size: 20px;
-    margin: 0px 10px;
-    color: $green;
-  }
-  a p.lock {
-    font-size: 20px;
-    margin: 0px 10px;
-    color: $red;
-  }
+}
+i.fa.fa-unlock {
+  font-size: 20px;
+  margin: 0px 10px;
+  color: $green;
+}
+i.fa.fa-lock {
+  font-size: 20px;
+  margin: 0px 10px;
+  color: $red;
 }
 .item-invisible-part {
   p {

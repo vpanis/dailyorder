@@ -51,6 +51,7 @@
 
                           <%= fields_for 'order_lines[]', order_line do |f| %>
 
+                            <%= f.text_field :product_id, value: order_line.product.id, class: "hidden" %>
                             <%= f.label :quantity, "#{order_line.product.name}", class: "title" %>
                             <%= f.number_field :quantity, min: 0, :step => order_line.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", readonly: order.status == "Envoyée" ? true : false, placeholder: order_line.product.measuring_unit == "kgs" ? order_line.quantity.to_f : order_line.quantity.to_i %>
                             <div class="unit"><%= order_line.product.measuring_unit %></div>
@@ -59,7 +60,7 @@
                         </div>
                       </div>
                     <% end %>
-                  <%= hidden_field_tag(:delivery_date, nil, options = { class: "datepicker_hidden_field" }) %>
+                  <%= hidden_field_tag(:delivery_date, order.delivery_date, options = { class: "datepicker_hidden_field" }) %>
                 </div>
 
 
@@ -72,15 +73,14 @@
                     <%= link_to edit_restaurant_order_path(@restaurant, order), class: "order-link" do %>
                       <i class="fa fa-pencil" aria-hidden="true"></i>
                     <% end %>
-                    <label type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm">Valider cette commande</label>
+                    <label type="button" class="btn btn-success" data-toggle="modal" data-target=".bs-example-modal-sm">Valider</label>
 
 
 
-              <% end %>
 
 
 
-                    <%= button_to restaurant_order_path(@restaurant, order), method: :delete, class: "order-link" do %>
+                    <%= link_to restaurant_order_path(@restaurant, order), method: :delete, class: "order-link" do %>
                       <i class="fa fa-trash-o" aria-hidden="true"></i>
                     <% end %>
                   </div>
@@ -92,11 +92,11 @@
                           <label type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></label>
                           <h4 class="modal-title" id="myModalLabel">Choississez votre date de livraison</h4>
                         </div>
-                        <div class="modal-body">
-                          <div class="calendar text-center"></div>
+                        <div class="modal-body text-center">
+                          <div class="calendar" style="display: inline-block;"></div>
                         </div>
                         <div class="modal-footer">
-                          <label type="button" class="btn btn-default" data-dismiss="modal">Retour</label>
+                          <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
                           <%= submit_tag("Valider", :id=>"button-submit", class: "btn btn-success", :name=>"submit") %>
                         </div>
                       </div>
@@ -105,6 +105,7 @@
                 </div>
 
 
+              <% end %>
 
 
             </div>
@@ -125,23 +126,40 @@
   <script>
     $(document).ready(function () {
 
-      $(".not-first").hide();
-      $(".order-body").hide();
-      $(".order-footer").hide();
+      $('.calendar').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            startDate: "+1d",
+            daysOfWeekDisabled: [0],
+            todayHighlight: true,
+            multidate: false,
+            language: 'fr',
+        });
 
-      $(".order-top").on('click', function () {
+        $('.calendar').datepicker();
+        $('.calendar').on('changeDate', function() {
+            $('.datepicker_hidden_field').val(
+                $('.calendar').datepicker('getFormattedDate')
+            );
+        });
 
-          var $a = $(this).children(".order-title").children(".not-first");
-          $a.slideToggle(); //toggle the current one
-          $(".not-first").not($a).slideUp(); //hide the others
-          var $b = $(this).next();
-          $b.slideToggle(); //toggle the current one;
-          $(".order-body").not($b).slideUp(); //hide the others
-          var $c = $(this).next().next();
-          $c.slideToggle(); //toggle the current one;
-          $(".order-footer").not($c).slideUp(); //hide the others
+      // $(".not-first").hide();
+      // $(".order-body").hide();
+      // $(".order-footer").hide();
 
-      });
+      // $(".order-top").on('click', function () {
+
+      //     var $a = $(this).children(".order-title").children(".not-first");
+      //     $a.slideToggle(); //toggle the current one
+      //     $(".not-first").not($a).slideUp(); //hide the others
+      //     var $b = $(this).next();
+      //     $b.slideToggle(); //toggle the current one;
+      //     $(".order-body").not($b).slideUp(); //hide the others
+      //     var $c = $(this).next().next();
+      //     $c.slideToggle(); //toggle the current one;
+      //     $(".order-footer").not($c).slideUp(); //hide the others
+
+      // });
 
     });
   </script>

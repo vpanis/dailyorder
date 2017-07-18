@@ -1,0 +1,7 @@
+.calendar table tr td.active {
+  background-image: linear-gradient(to bottom, $green, $green) !important;
+}
+
+.bootstrap-datetimepicker-widget .timepicker-hour, .bootstrap-datetimepicker-widget .timepicker-minute, .bootstrap-datetimepicker-widget .timepicker-second {
+  font-size: 16px !important;
+}

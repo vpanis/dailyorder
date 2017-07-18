@@ -1,0 +1,21 @@
+#####################################################################
+########## Postmark two-factor authentication backup codes ##########
+#####################################################################
+
+Backup codes let you log into your Postmark account in case you lose
+access to your authentication device. We recommend that you treat
+these like passwords and store them in a safe place.
+
+After logging in, enter one of the codes below when prompted for your
+two-factor security code. Each code may only be used once.
+
+1.  79a63b
+2.  ada667
+3.  52a181
+4.  831252
+5.  678ad0
+6.  5d9caa
+7.  2fc0da
+8.  45bc99
+9.  53a2d9
+10. 7cab54

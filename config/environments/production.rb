@@ -1,6 +1,6 @@
 Rails.application.configure do
-  # config.action_mailer.delivery_method     = :postmark
-  # config.action_mailer.postmark_settings   = { api_key: ENV['695f41d7-e445-47d3-9a70-958ff4d36df8'] }
+  config.action_mailer.delivery_method     = :smtp
+  config.action_mailer.postmark_settings   = { api_key: ENV['POSTMARK_API_KEY'] }
   config.action_mailer.default_url_options = { host: "http://www.dailyorder.co" }
   # Settings specified here will take precedence over those in config/application.rb.
 

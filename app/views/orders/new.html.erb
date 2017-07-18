@@ -17,7 +17,7 @@
           <% @order_lines_promotions.each do |order_line_promotion| %>
             <div class="col-xs-12">
               <div class="card-product">
-              <%= fields_for 'order_lines_promotions[]', order_line_promotion do |f| %>
+              <%= fields_for 'order_lines[]', order_line_promotion do |f| %>
                 <%= f.text_field :product_id, value: order_line_promotion.product.id, class: "hidden" %>
                 <%= f.label :quantity, "#{order_line_promotion.product.name}", class: "title" %>
                 <%= f.number_field :quantity, min: 0, :step => order_line_promotion.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", placeholder: 0 %>
@@ -35,7 +35,7 @@
           <% @order_lines_favorites.each do |order_line_favorite| %>
             <div class="col-xs-12">
               <div class="card-product">
-              <%= fields_for 'order_lines_favorites[]', order_line_favorite do |f| %>
+              <%= fields_for 'order_lines[]', order_line_favorite do |f| %>
                 <%= f.text_field :product_id, value: order_line_favorite.product.id, class: "hidden" %>
                 <%= f.label :quantity, "#{order_line_favorite.product.name}", class: "title" %>
                 <%= f.number_field :quantity, min: 0, :step => order_line_favorite.product.measuring_unit == "kgs" ? 0.5 : 1, class: "quantity", placeholder: 0 %>
@@ -79,8 +79,8 @@
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
                 <h4 class="modal-title" id="myModalLabel">Choississez votre date de livraison</h4>
               </div>
-              <div class="modal-body">
-                <div class="calendar text-center"></div>
+              <div class="modal-body text-center">
+                <div class="calendar" style="display: inline-block;"></div>
               </div>
               <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Retour</button>
@@ -95,3 +95,30 @@
     </div>
   </div>
 </div>
+
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+
+        $('.calendar').datepicker({
+            format: "dd/mm/yyyy",
+            weekStart: 1,
+            startDate: "+1d",
+            daysOfWeekDisabled: [0],
+            todayHighlight: true,
+            multidate: false,
+            language: 'fr',
+        });
+
+        $('.calendar').datepicker();
+        $('.calendar').on('changeDate', function() {
+            $('.datepicker_hidden_field').val(
+                $('.calendar').datepicker('getFormattedDate')
+            );
+        });
+
+    });
+
+  </script>
+<% end %>

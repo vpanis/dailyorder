@@ -1,7 +1,7 @@
 class Supplier < ApplicationRecord
   include PgSearch
   pg_search_scope :search_supplier,
-                  against: [ email: 'B', name: 'A' ],
+                  against: [ :email, :name ],
                   using: {
                     tsearch: { prefix: true, any_word: true },
                     trigram: {

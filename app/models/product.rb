@@ -18,5 +18,5 @@ class Product < ApplicationRecord
 
   validates :name, presence: true
   validates_length_of :name, :maximum => 22
-  validates :measuring_unit, presence: true, inclusion: { in: ["kgs", "colis", "boites", "pièces", "cols", "paquets", "caisses(24bts)", "cartons(6bts)", "cartons(12bts)"] }
+  validates :measuring_unit, presence: true, inclusion: { in: ["kgs", "col.", "boit.", "pièc.", "cols", "paq.", "c(24)", "c(6)", "c(12)"] }
 end

@@ -30,6 +30,7 @@
   }
 }
 .order {
+  cursor: pointer;
   border-radius: 5px;
   color: #424242;
   background-color: $bg;
@@ -76,7 +77,7 @@
   flex: 0 0 10px;
 }
 .order-footer {
-  margin: 10px 40px;
+  margin: 10px 20px;
 }
 .order-links {
   display: flex;

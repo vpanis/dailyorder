@@ -59,7 +59,7 @@
                         </div>
                       </div>
                     <% end %>
-                  <%= hidden_field_tag(:delivery_date, d = order.delivery_date ? order.delivery_date.strftime("%d/%m/%Y") : nil, options = { class: "datepicker_hidden_field" }) %>
+
                 </div>
 
 
@@ -72,7 +72,7 @@
                     <%= link_to edit_restaurant_order_path(@restaurant, order), class: "order-link" do %>
                       <i class="fa fa-pencil" aria-hidden="true"></i>
                     <% end %>
-                    <%= button_tag("Enregistrer les modifications", type: "submit", name: "submit", class: "btn btn-success") %>
+                    <%= button_tag("Enregistrer", type: "submit", name: "submit", class: "btn btn-success") %>
 
 
               <% end %>

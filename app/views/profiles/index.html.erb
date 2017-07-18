@@ -23,7 +23,7 @@
         <!-- Search form -->
         <%= form_tag restaurant_profiles_path(@restaurant), method: :get, class: "navbar-wagon-search large" do %>
           <%= text_field_tag :query, params[:query],
-                            id: "product_search",
+                            id: "user_search",
                             placeholder: "Taper un email ou un nom",
                             onfocus: "this.placeholder = ''",
                             onblur: "this.placeholder = 'Taper un email ou un nom'",

@@ -9,15 +9,6 @@ class ProductsController < ApplicationController
     end
   end
 
-  def autocomplete
-    render json: Product.search(params[:query],
-                 autocomplete: true,
-                 fields: [:name],
-                 limit: 10).map { |product|
-                   product.name
-                 }
-  end
-
   def show
   end
 

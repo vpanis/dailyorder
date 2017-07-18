@@ -7,8 +7,18 @@ class RelationsController < ApplicationController
     @relations = Relation.where(restaurant: @restaurant)
   end
 
+  def new
+  end
+
   def create
-    raise
-    redirect_to restaurant_path(@restaurant)
+  end
+
+  def edit
+  end
+
+  def update
+  end
+
+  def destroy
   end
 end

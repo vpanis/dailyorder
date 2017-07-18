@@ -60,33 +60,30 @@ class OrdersController < ApplicationController
   def create
     @restaurant = Restaurant.find(params["restaurant_id"])
     @order = Order.new
+    authorize @order
     @order.relation = Relation.find(params["relation_id"].to_i)
     @order.user = current_user
 
     if params["delivery_date"] == ""
+      @order.delivery_date = nil
       @order.status = "En cours"
-    else params["delivery_date"].to_datetime >= DateTime.now + 1
+    else params["delivery_date"].to_datetime > DateTime.now
       @order.delivery_date = params["delivery_date"].to_datetime
       @order.status = "Validée"
     end
 
-    @order_lines = []
-    @order_lines << params[:order_lines_promotions] if !params[:order_lines_promotions].nil?
-    @order_lines << params[:order_lines_favorites] if !params[:order_lines_favorites].nil?
-    @order_lines << params[:order_lines] if !params[:order_lines].nil?
+    @order_lines = params["order_lines"].to_a.map { |ol| ol.to_a }
 
     @order_lines.each do |order_line|
-      if order_line.first["quantity"].to_f != 0
+      if order_line[1][1].to_f != 0
         a = OrderLine.new
         a.order = @order
-        a.product = Product.find(order_line.first["product_id"].to_i)
-        a.quantity = order_line.first["quantity"].to_f
-        authorize a
+        a.product = Product.find(order_line[0][1].to_i)
+        a.quantity = order_line[1][1].to_f
         a.save!
       end
     end
 
-    authorize @order
     if @order.order_lines.first.nil?
       redirect_to restaurant_index_validated_path(@restaurant)
     else
@@ -126,22 +123,18 @@ class OrdersController < ApplicationController
         a.product = product
         if product.is_discount && !@favorite_products.include?(product)
           @order_lines_promotions << a
-        end
-        if @favorite_products.include?(product)
+        elsif @favorite_products.include?(product)
           @order_lines_favorites << a
-        end
-        if !@favorite_products.include?(product) && !product.is_discount
+        else
           @order_lines << a
         end
       else
         a = OrderLine.find_by(product: product, order: @order)
         if product.is_discount && !@favorite_products.include?(product)
           @order_lines_promotions << a
-        end
-        if @favorite_products.include?(product)
+        elsif @favorite_products.include?(product)
           @order_lines_favorites << a
-        end
-        if !@favorite_products.include?(product) && !product.is_discount
+        else !@favorite_products.include?(product) && !product.is_discount
           @order_lines << a
         end
       end
@@ -151,54 +144,56 @@ class OrdersController < ApplicationController
   def update
     @restaurant = Restaurant.find(params["restaurant_id"])
     @order = Order.find(params["id"])
+    authorize @order
 
-    @order_lines_products = @order.order_lines.map { |order_line| order_line.product }
-    @order_lines_promotions_products = @order_lines_products.select { |product| product.is_discount }
-    @order_lines_favorites_products = @order_lines_products.select { |product| product.relations.include?(@relation) }
+    # @order_lines_products = @order.order_lines.map { |order_line| order_line.product }
+    # @order_lines_promotions_products = @order_lines_products.select { |product| product.is_discount }
+    # @order_lines_favorites_products = @order_lines_products.select { |product| product.relations.include?(@relation) }
 
     @relation = @order.relation
 
-    @products = @relation.supplier.products
-    @promotions = @relation.supplier.products.select { |product| product.is_discount }
-    @favorites = @relation.favorites.map { |favorite| favorite.product }
+    # @products = @relation.supplier.products
+    # @promotions = @relation.supplier.products.select { |product| product.is_discount }
+    # @favorites = @relation.favorites.map { |favorite| favorite.product }
 
     @order.user = current_user
 
-    if !@order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
-      ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a << order_lines_promotions_params.to_a
-    elsif !@order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
-      ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a
-    elsif @order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
-      ol_params = order_lines_params.to_a << order_lines_promotions_params.to_a
-    elsif @order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
-      ol_params = order_lines_params.to_a
-    end
+    # if !@order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
+    #   ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a << order_lines_promotions_params.to_a
+    # elsif !@order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
+    #   ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a
+    # elsif @order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
+    #   ol_params = order_lines_params.to_a << order_lines_promotions_params.to_a
+    # elsif @order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
+    #   ol_params = order_lines_params.to_a
+    # end
 
-    ol_params.to_a.each do |order_line|
-      if !OrderLine.find_by(product_id: order_line[1]["product_id"].to_i, order: @order).nil?
-        a = OrderLine.find_by(product_id: order_line[1]["product_id"].to_i, order: @order)
-        a.quantity = order_line[1]["quantity"].to_f
-        authorize a
-        a.save
+    @order_lines = params["order_lines"].to_a.map { |ol| ol[1].to_a }
+
+    @order_lines.to_a.each do |order_line|
+      if !OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order).nil?
+        a = OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order)
+        a.quantity = order_line[1][1].to_f
+        a.save!
       else
         a = OrderLine.new
         a.order = @order
-        a.product = Product.find(order_line[1]["product_id"].to_i)
-        a.quantity = order_line[1]["quantity"].to_f
-        authorize a
-        a.save
+        a.product = Product.find(order_line[0][1].to_i)
+        a.quantity = order_line[1][1].to_f
+        a.save!
       end
     end
 
-    if delivery_date_params.to_datetime >= DateTime.now + 1
-      @order.delivery_date = delivery_date_params.to_datetime
+    if !params["delivery_date"].to_datetime.nil? && params["delivery_date"].to_datetime > DateTime.now
+      @order.delivery_date = params["delivery_date"].to_datetime
       @order.status = "Validée"
     else
+      @order.delivery_date = nil
       @order.status = "En cours"
     end
 
-    authorize @order
-    @order.save
+    @order.save!
+
     if @order.delivery_date.nil?
       redirect_to restaurant_index_pending_path(@restaurant)
     else
@@ -222,28 +217,28 @@ class OrdersController < ApplicationController
     end
   end
 
-  private
+  # private
 
-  def order_lines_promotions_params
-    params.require(:order_lines_promotions).permit!.each do |k,v|
-      v.permit(:product_id, :quantity)
-    end
-  end
+  # def order_lines_promotions_params
+  #   params.require(:order_lines_promotions).permit!.each do |k,v|
+  #     v.permit(:product_id, :quantity)
+  #   end
+  # end
 
-  def order_lines_favorites_params
-    params.require(:order_lines_favorites).permit!.each do |k,v|
-      v.permit(:product_id, :quantity)
-    end
-  end
+  # def order_lines_favorites_params
+  #   params.require(:order_lines_favorites).permit!.each do |k,v|
+  #     v.permit(:product_id, :quantity)
+  #   end
+  # end
 
-  def order_lines_params
-    params.require(:order_lines).permit!.each do |k,v|
-      v.permit(:product_id, :quantity)
-    end
-  end
+  # def order_lines_params
+  #   params.require(:order_lines).permit!.each do |k,v|
+  #     v.permit(:product_id, :quantity)
+  #   end
+  # end
 
-  def delivery_date_params
-    params.require(:delivery_date)
-  end
+  # def delivery_date_params
+  #   params.require(:delivery_date)
+  # end
 
 end

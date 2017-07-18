@@ -74,6 +74,9 @@
           <div class="item">
             <div class="item-visible-part">
               <p><%= supplier.name %></p>
+              <% if Relation.find_by(supplier: supplier, restaurant: @restaurant).delivery_conditions.first.nil? %>
+                <i class="fa fa-clock-o" aria-hidden="true"></i>
+              <% end %>
             </div>
             <div class="item-invisible-part">
               <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>

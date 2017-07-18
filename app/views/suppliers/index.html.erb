@@ -22,13 +22,13 @@
       <div class="navbar-wagon-middle text-center"">
 
         <!-- Search form -->
-        <%= form_tag restaurant_suppliers_path(@restaurant), method: :get, class: "navbar-wagon-search" do %>
+        <%= form_tag restaurant_suppliers_path(@restaurant), method: :get, class: "navbar-wagon-search large" do %>
           <%= text_field_tag :query, params[:query],
-                            id: "product_search",
+                            id: "supplier_search",
                             placeholder: "Trouver un fournisseur",
                             onfocus: "this.placeholder = ''",
                             onblur: "this.placeholder = 'Trouver un fournisseur'",
-                            class: "navbar-wagon-search-input" %>
+                            class: "navbar-wagon-search-input large" %>
           <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
             <i class="fa fa-search"></i>
           <% end %>
@@ -51,7 +51,7 @@
 
           <% @suppliers.each do |supplier|%>
 
-            <%= link_to Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? new_restaurant_relation_path(@restaurant) : edit_restaurant_relation_path(@restaurant, Relation.find_by(supplier: supplier, restaurant: @restaurant)), class: "item-link" do %>
+            <%= link_to Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : edit_restaurant_relation_path(@restaurant, Relation.find_by(supplier: supplier, restaurant: @restaurant)), class: "item-link" do %>
 
               <div class="item-user">
                 <div class="item-user-text">

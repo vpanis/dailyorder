@@ -5,12 +5,13 @@ class User < ApplicationRecord
                   using: {
                     tsearch: { prefix: true, any_word: true },
                     trigram: {
-                      only: [ :name ]
+                      only: [ :first_name, :last_name ]
                       }
                     },
                   ignoring: :accents
 
-  # after_create :send_welcome_email
+  after_create :send_welcome_email
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
 
@@ -21,7 +22,7 @@ class User < ApplicationRecord
   has_many :profiles
   has_many :restaurants, through: :profiles
   has_many :relations, through: :restaurants
-  has_many :orders
+  has_many :orders, dependent: :destroy
 
   validates :email, presence: true
   validates :email, uniqueness: true
