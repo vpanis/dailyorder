@@ -184,7 +184,7 @@ class OrdersController < ApplicationController
       end
     end
 
-    if !params["delivery_date"].to_datetime.nil? && params["delivery_date"].to_datetime > DateTime.now
+    if !params["delivery_date"].nil? && !params["delivery_date"].to_datetime.nil? && params["delivery_date"].to_datetime > DateTime.now
       @order.delivery_date = params["delivery_date"].to_datetime
       @order.status = "Validée"
     else
