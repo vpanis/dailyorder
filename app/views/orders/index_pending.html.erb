@@ -122,40 +122,40 @@
   <script>
     $(document).ready(function () {
 
-      $('.calendar').datepicker({
-            format: "dd/mm/yyyy",
-            weekStart: 1,
-            startDate: "+1d",
-            daysOfWeekDisabled: [0],
-            todayHighlight: true,
-            multidate: false,
-            language: 'fr',
-        });
+      // $('.calendar').datepicker({
+      //       format: "dd/mm/yyyy",
+      //       weekStart: 1,
+      //       startDate: "+1d",
+      //       daysOfWeekDisabled: [0],
+      //       todayHighlight: true,
+      //       multidate: false,
+      //       language: 'fr',
+      //   });
 
-        $('.calendar').datepicker();
-        $('.calendar').on('changeDate', function() {
-            $('.datepicker_hidden_field').val(
-                $('.calendar').datepicker('getFormattedDate')
-            );
-        });
+      //   $('.calendar').datepicker();
+      //   $('.calendar').on('changeDate', function() {
+      //       $('.datepicker_hidden_field').val(
+      //           $('.calendar').datepicker('getFormattedDate')
+      //       );
+      //   });
 
-      // $(".not-first").hide();
-      // $(".order-body").hide();
-      // $(".order-footer").hide();
+      $(".not-first").hide();
+      $(".order-body").hide();
+      $(".order-footer").hide();
 
-      // $(".order-top").on('click', function () {
+      $(".order-top").on('click', function () {
 
-      //     var $a = $(this).children(".order-title").children(".not-first");
-      //     $a.slideToggle(); //toggle the current one
-      //     $(".not-first").not($a).slideUp(); //hide the others
-      //     var $b = $(this).next();
-      //     $b.slideToggle(); //toggle the current one;
-      //     $(".order-body").not($b).slideUp(); //hide the others
-      //     var $c = $(this).next().next();
-      //     $c.slideToggle(); //toggle the current one;
-      //     $(".order-footer").not($c).slideUp(); //hide the others
+          var $a = $(this).children(".order-title").children(".not-first");
+          $a.slideToggle(); //toggle the current one
+          $(".not-first").not($a).slideUp(); //hide the others
+          var $b = $(this).next();
+          $b.slideToggle(); //toggle the current one;
+          $(".order-body").not($b).slideUp(); //hide the others
+          var $c = $(this).next().next();
+          $c.slideToggle(); //toggle the current one;
+          $(".order-footer").not($c).slideUp(); //hide the others
 
-      // });
+      });
 
     });
   </script>
