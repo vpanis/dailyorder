@@ -1,0 +1,204 @@
+<div class="container">
+  <div class="row">
+    <div class="col-xs-12 col-md-6 col-md-offset-3">
+      <div class="form-devise">
+
+        <h2>Définir les conditions de livraison pour le restaurant <%= @restaurant.name %></h2>
+
+        <%= simple_form_for(@delivery_condition, url: supplier_delivery_conditions_path(@supplier), method: :post) do |f| %>
+
+          <%= f.error_notification %>
+
+          <%= f.hidden_field :relation_id, value: @relation.id %>
+
+          <h3>Jour de livraison :</h3>
+
+          <%= f.input :monday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Lundi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :monday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :monday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :tuesday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Mardi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :tuesday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :tuesday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :wednesday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Mercredi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :wednesday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :wednesday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :thursday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Jeudi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :thursday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :thursday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :friday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Vendredi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :friday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :friday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :saturday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Samedi",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :saturday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :saturday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :sunday,
+                      collection: [[true, 'Oui'], [false, 'Non']],
+                      label: "Dimanche",
+                      label_method: :last,
+                      value_method: :first,
+                      as: :radio_buttons,
+                      item_wrapper_class: 'inline',
+                      checked: false %>
+
+            <div class="order-before">
+
+              <p>Commande avant le :</p>
+
+              <%= f.input :sunday_order_day,
+                          collection: ["Lundi", "Mardi", "Mercredi", "Jeudi", "Vendredi", "Samedi", "Dimanche"],
+                          label: "Jour :" %>
+              <%= f.input :sunday_order_hour,
+                          collection: ["11h30", "17h30", "23h30"],
+                          label: "Heure :" %>
+
+            </div>
+
+          <%= f.input :order_value_min,
+                      collection: [0, 25, 50, 75, 100, 125, 150, 175, 200],
+                      label: "Minimum de commande en euros pour livraison gratuite",
+                      required: true
+                      %>
+
+          <div class="form-actions">
+            <%= f.button :submit, "Valider" %>
+          </div>
+
+        <% end %>
+
+        <h4 class="text-center" ><%= link_to "Retour", :back %></h4>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<% content_for(:after_js) do %>
+  <script>
+    $(document).ready(function () {
+
+      $(".order-before").hide();
+
+      $(".form-group.radio_buttons.optional").on('change', function () {
+
+          var $a = $(this).next(".order-before");
+          $a.slideToggle(); //toggle the current one
+
+      });
+
+    });
+  </script>
+<% end %>

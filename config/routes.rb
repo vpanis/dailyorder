@@ -31,9 +31,12 @@ Rails.application.routes.draw do
     end
 
     resources :suppliers do
-      resources :relations
+      resources :profiles, only: [:index, :new, :create, :edit, :update]
+      resources :delivery_conditions, only: [:new, :create, :edit, :update]
+      resources :products do
+        collection { post :import }
+      end
       resources :documents
-      resources :products
     end
   end
 end

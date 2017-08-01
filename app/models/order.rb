@@ -7,4 +7,6 @@ class Order < ApplicationRecord
   delegate :restaurant, :to => :relation
 
   validates :status, presence: true, inclusion: { in: ["En cours", "Validée", "Envoyée"] }
+
+  accepts_nested_attributes_for :order_lines
 end

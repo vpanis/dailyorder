@@ -38,3 +38,30 @@
     font-size: 15px;
   }
 }
+span.radio.inline {
+  display: inline-block;
+  margin: 0px;
+  label {
+    margin: 0 20px;
+  }
+}
+label.control-label.radio_buttons.optional {
+  width: 100px;
+  font-weight: normal;
+  margin: 0px;
+}
+div.form-group.radio_buttons.optional {
+  margin: 10px 0;
+}
+select.form-control.select.optional {
+  display: inline-block;
+  width: 120px;
+}
+label.control-label.select.optional {
+  width: 100px;
+  font-weight: normal;
+  margin: 0px;
+}
+.order-before {
+  margin-left: 30px;
+}

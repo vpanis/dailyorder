@@ -4,4 +4,12 @@ class ProductPolicy < ApplicationPolicy
       scope
     end
   end
+
+  def new?
+    !user.suppliers.first.nil?
+  end
+
+  def import?
+    !user.suppliers.first.nil?
+  end
 end

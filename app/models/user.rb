@@ -21,6 +21,7 @@ class User < ApplicationRecord
 
   has_many :profiles
   has_many :restaurants, through: :profiles
+  has_many :suppliers, through: :profiles
   has_many :relations, through: :restaurants
   has_many :orders, dependent: :destroy
 

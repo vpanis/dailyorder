@@ -1,3 +1,5 @@
+require 'active_support'
+
 puts 'Cleaning DB...'
 
 Profile.destroy_all
@@ -21,10 +23,6 @@ puts 'Creating Users...'
 vincent = User.create!(admin: true, email: "vpanis@hotmail.fr", password: "12345678", first_name: "Vincent", last_name: "Panis", phone_number: "06.84.73.96.18")
 annaelle = User.create!(email: "annaellerenault@gmail.com", password: "12345678", first_name: "Annaelle", last_name: "Renault", phone_number: "06.84.73.96.18")
 
-puts 'Creating Profiles...'
-
-vincent_profile = Profile.create!(user: vincent, restaurant: qg, role: "Profil admin")
-
 puts 'Creating Suppliers...'
 
 tribolet = Supplier.create!(email: 'alain@laposte.net', name: "Ets Tribolet", address: "30 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.91", sector: "Boucherie", siret: "798 578 444 000 20")
@@ -33,6 +31,12 @@ richard = Supplier.create!(email: 'arnaud@laposte.net', name: "Cafés Richard", 
 joceane = Supplier.create!(email: 'dalila@laposte.net', name: "J'océane", address: "33 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.94", sector: "Poissonnerie", siret: "798 578 111 000 20")
 brument = Supplier.create!(email: 'benoit@laposte.net', name: "Benoit Brument Vins", address: "34 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.95", sector: "Vins et spiritueux", siret: "798 578 666 000 20")
 vergers = Supplier.create!(email: 'eric@laposte.net', name: "Les Vergers de Boulogne", address: "35 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.96", sector: "Fruits et légumes", siret: "798 578 777 000 20")
+andre = Supplier.create!(email: 'andre@laposte.net', name: "Boucherie André", address: "40 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.10.80", sector: "Boucherie", siret: "798 578 444 000 10")
+
+puts 'Creating Profiles...'
+
+vincent_profile = Profile.create!(user: vincent, restaurant: qg, role: "Profil admin")
+vince_profile = Profile.create!(user: vincent, supplier: andre, role: "Profil admin")
 
 puts 'Creating Relations...'
 
@@ -42,6 +46,13 @@ cafe = Relation.create!(restaurant: qg, supplier: richard)
 poisson = Relation.create!(restaurant: qg, supplier: joceane)
 vin = Relation.create!(restaurant: qg, supplier: brument)
 legume = Relation.create!(restaurant: qg, supplier: vergers)
+
+puts 'Creating Delivery Conditions...'
+
+everyday          = DeliveryCondition.create!(order_deadlines: [nil, 0, 0, 0, 0, 0, 0], undelivery_days: [0], holidays: [], relation: viande)
+monday_thursday   = DeliveryCondition.create!(order_deadlines: [nil, 2.days.ago, nil, nil, 1.day.ago, nil, nil], undelivery_days: [0, 2, 3, 5, 6] ,holidays: [], relation: boisson)
+tuesday_friday    = DeliveryCondition.create!(order_deadlines: [nil, nil, 3.days.ago, nil, nil, 1.days.ago, nil], undelivery_days: [0, 1, 3, 4, 6], holidays: [], relation: cafe)
+friday            = DeliveryCondition.create!(order_deadlines: [nil, nil, nil, nil, nil, 1.days.ago, nil], undelivery_days: [0, 1, 2, 3, 4, 6], holidays: [], relation: vin)
 
 puts 'Creating Products...'
 

@@ -9,7 +9,7 @@ class CreateSuppliers < ActiveRecord::Migration[5.0]
       t.string :phone_number
       t.string :sector
       t.string :siret
-      t.boolean :is_price_infos
+      t.boolean :is_price_infos, default: false
 
       t.timestamps
     end

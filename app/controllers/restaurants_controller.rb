@@ -4,7 +4,7 @@ class RestaurantsController < ApplicationController
   def index
     @restaurants = policy_scope(Restaurant)
     @restaurants = current_user.restaurants
-    @profiles = current_user.profiles
+    @profiles = current_user.profiles.select { |profile| profile.supplier.nil? }
   end
 
   def show

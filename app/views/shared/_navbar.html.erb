@@ -76,21 +76,26 @@
           <%= image_tag set_user_photo(current_user), class: "avatar dropdown-toggle", id: "navbar-wagon-menu", "data-toggle" => "dropdown" %>
           <ul class="dropdown-menu dropdown-menu-right navbar-wagon-dropdown-menu">
             <li>
-              <%= link_to root_path do %>
+              <%= link_to restaurants_path do %>
                 <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
+              <% end %>
+            </li>
+            <li>
+              <%= link_to suppliers_path do %>
+                <i class="fa fa-sellsy" aria-hidden="true"></i>  <%= t(".profile", default: "Vendre mes produits") %>
+              <% end %>
+            </li>
+            <li>
+              <% if current_user.restaurants.length == 1 %>
+                <%= link_to restaurant_path(current_user.restaurants.first) do %>
+                  <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Tableau de bord") %>
+                <% end %>
               <% end %>
             </li>
             <li>
               <% if current_user.restaurants.length == 1 %>
                 <%= link_to restaurant_index_validated_path(current_user.restaurants.first) do %>
                   <i class="fa fa-first-order" aria-hidden="true"></i>  <%= t(".profile", default: "Mes commandes") %>
-                <% end %>
-              <% end %>
-            </li>
-            <li>
-              <% if current_user.restaurants.length == 1 %>
-                <%= link_to restaurant_relations_path(current_user.restaurants.first) do %>
-                  <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Mes fournisseurs") %>
                 <% end %>
               <% end %>
             </li>
@@ -126,21 +131,26 @@
         <% if user_signed_in? %>
 
           <li>
-            <%= link_to root_path do %>
+            <%= link_to restaurants_path do %>
               <i class="fa fa-home"></i>  <%= t(".profile", default: "Home") %>
+            <% end %>
+          </li>
+          <li>
+            <%= link_to suppliers_path do %>
+              <i class="fa fa-sellsy" aria-hidden="true"></i>  <%= t(".profile", default: "Vendre mes produits") %>
+            <% end %>
+          </li>
+          <li>
+            <% if current_user.restaurants.length == 1 %>
+              <%= link_to restaurant_path(current_user.restaurants.first) do %>
+                <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Tableau de bord") %>
+              <% end %>
             <% end %>
           </li>
           <li>
             <% if current_user.restaurants.length == 1 %>
               <%= link_to restaurant_index_validated_path(current_user.restaurants.first) do %>
                 <i class="fa fa-first-order" aria-hidden="true"></i>  <%= t(".profile", default: "Mes commandes") %>
-              <% end %>
-            <% end %>
-          </li>
-          <li>
-            <% if current_user.restaurants.length == 1 %>
-              <%= link_to restaurant_relations_path(current_user.restaurants.first) do %>
-                <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Mes fournisseurs") %>
               <% end %>
             <% end %>
           </li>

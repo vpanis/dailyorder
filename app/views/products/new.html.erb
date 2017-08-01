@@ -1,0 +1,14 @@
+<div class="container">
+
+  <div class="box">
+
+    <h2 class="text-center">Importer vos produits</h2>
+
+    <%= form_tag import_supplier_products_path(@supplier), multipart: true do%>
+      <%= file_field_tag :file %>
+      <%= submit_tag "Importer" %>
+    <% end %>
+
+
+  </div>
+</div>

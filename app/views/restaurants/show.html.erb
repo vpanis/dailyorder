@@ -6,7 +6,7 @@
       <div style="display: flex; justify-content: space-between; width: 100%;">
         <div>
           <%= link_to restaurants_path, class: "link-to" do %>
-            <i class="fa fa-arrow-left" aria-hidden="true"></i> Retour
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
           <% end %>
         </div>
         <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
@@ -14,12 +14,12 @@
             <i class="fa fa-pencil" aria-hidden="true"></i>
           <% end %>
         </div>
-        <div style="width: 68.39px;">
+        <div style="width: 16px;">
         </div>
       </div>
       <div class="dashboard-head-text text-center">
-        <h2 class="dashboard-head-name" style="margin: 0px;">Tableau de Bord</h2>
         <h2 class="dashboard-head-name"><%= @restaurant.name %></h2>
+        <h3 class="dashboard-head-name">Tableau de bord</h3>
         <%= link_to "Passer vos commandes", restaurant_relations_path(@restaurant), class: "btn btn-success dashboard-head-cta" %>
       </div>
     </div>
@@ -63,7 +63,7 @@
 
           <h2 class="chapter-title">Fournisseurs (<%= @restaurant.suppliers.size %>)</h2>
 
-          <%= link_to restaurant_suppliers_path(@restaurant), class: "btn btn-primary chapter-link" do %>
+          <%= link_to new_restaurant_relation_path(@restaurant), class: "btn btn-primary chapter-link" do %>
             <i class="fa fa-user-plus" aria-hidden="true"></i>
           <% end %>
 

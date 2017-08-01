@@ -1,18 +1,15 @@
 class SuppliersController < ApplicationController
-  before_action :set_restaurant, only: [:show, :edit, :update, :destroy]
+  before_action :set_supplier, only: [:show, :edit, :update, :destroy]
 
   def index
     @suppliers = policy_scope(Supplier)
-    @restaurant = Restaurant.find(params[:restaurant_id])
-    authorize @restaurant
-    if params[:query].present?
-      @suppliers = Supplier.search_supplier(params[:query])
-    else
-      @suppliers = []
-    end
+    @suppliers = current_user.suppliers
+    @profiles = current_user.profiles.select { |profile| profile.restaurant.nil? }
   end
 
   def show
+    @profiles = @supplier.profiles
+    @restaurants = @supplier.restaurants
   end
 
   def new
@@ -22,7 +19,8 @@ class SuppliersController < ApplicationController
 
   def create
     @supplier = Supplier.create(supplier_params)
-
+    authorize @supplier
+    redirect_to supplier_path(@supplier)
   end
 
   def edit
@@ -41,7 +39,7 @@ class SuppliersController < ApplicationController
   private
 
   def set_supplier
-    @supplier = supplier.find(params[:id])
+    @supplier = Supplier.find(params[:id])
     authorize @supplier
   end
 

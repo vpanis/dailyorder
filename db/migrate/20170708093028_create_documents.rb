@@ -4,7 +4,7 @@ class CreateDocuments < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :document_type
       t.boolean :sent, default: false
-      t.references :order, foreign_key: true
+      t.references :order, foreign_key: true, null: false
 
       t.timestamps
     end

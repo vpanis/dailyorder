@@ -2,11 +2,7 @@
 
   <div class="box">
 
-    <% if !@profiles.first.nil? %>
-
-      <h2 class="text-center head">Mes restaurants</h2>
-
-    <% end %>
+    <h2 class="text-center head">Profil restaurant</h2>
 
     <div class="text-center btn-order">
       <%= link_to "Ajouter un restaurant", new_restaurant_path, class: "btn btn-success" %>
@@ -14,7 +10,7 @@
 
     <% if @profiles.first.nil? %>
 
-      <h3 class="text-center" style="margin-top: 20px;">Aucun restaurant répertorié</h3>
+      <h3 class="text-center" style="margin-top: 20px;">Aucun établissement répertorié</h3>
 
     <% end %>
 

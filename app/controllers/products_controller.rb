@@ -13,6 +13,11 @@ class ProductsController < ApplicationController
   end
 
   def new
+    @supplier = Supplier.find(params[:supplier_id])
+    @product = Product.new
+    authorize @product
+
+    @products = policy_scope(Product)
   end
 
   def create
@@ -25,6 +30,14 @@ class ProductsController < ApplicationController
   end
 
   def destroy
+  end
+
+  def import
+    @supplier = Supplier.find(params[:supplier_id])
+    @product = Product.new
+    authorize @product
+    Product.import(params[:file], @supplier)
+    redirect_to supplier_path(@supplier), notice: "Products imported."
   end
 
   private

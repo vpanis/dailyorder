@@ -38,6 +38,10 @@ gem 'wkhtmltopdf-binary'
 # Gems to Search
 gem 'pg_search'
 
+# Gems to import excel file
+gem 'roo'
+gem "iconv", "~> 1.0.3"
+
 # Gems for asynchronism
 gem 'sidekiq'
 gem 'sidekiq-failures', github: 'mhfs/sidekiq-failures'

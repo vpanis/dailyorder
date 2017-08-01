@@ -29,6 +29,7 @@ class OrdersController < ApplicationController
     @supplier = Supplier.find(params[:supplier_id])
     @relation = Relation.find_by(restaurant: @restaurant, supplier: @supplier)
     @products = @relation.products
+    @days_of_delivery = []
 
     @favorite_products = []
     @relation.favorites.each do |favorite|
@@ -119,8 +120,9 @@ class OrdersController < ApplicationController
 
     @products.each do |product|
       if OrderLine.find_by(product: product, order: @order).nil?
-        a = instance_variable_set("@order_line_#{product.id}", OrderLine.new)
+        a = OrderLine.new
         a.product = product
+        a.order = @order
         if product.is_discount && !@favorite_products.include?(product)
           @order_lines_promotions << a
         elsif @favorite_products.include?(product)
@@ -146,43 +148,55 @@ class OrdersController < ApplicationController
     @order = Order.find(params["id"])
     authorize @order
 
-    # @order_lines_products = @order.order_lines.map { |order_line| order_line.product }
-    # @order_lines_promotions_products = @order_lines_products.select { |product| product.is_discount }
-    # @order_lines_favorites_products = @order_lines_products.select { |product| product.relations.include?(@relation) }
-
     @relation = @order.relation
-
-    # @products = @relation.supplier.products
-    # @promotions = @relation.supplier.products.select { |product| product.is_discount }
-    # @favorites = @relation.favorites.map { |favorite| favorite.product }
 
     @order.user = current_user
 
-    # if !@order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
-    #   ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a << order_lines_promotions_params.to_a
-    # elsif !@order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
-    #   ol_params = order_lines_params.to_a << order_lines_favorites_params.to_a
-    # elsif @order_lines_favorites_products.first.nil? && !@order_lines_promotions_products.first.nil?
-    #   ol_params = order_lines_params.to_a << order_lines_promotions_params.to_a
-    # elsif @order_lines_favorites_products.first.nil? && @order_lines_promotions_products.first.nil?
-    #   ol_params = order_lines_params.to_a
-    # end
-
-    @order_lines = params["order_lines"].to_a.map { |ol| ol[1].to_a }
-
-    @order_lines.to_a.each do |order_line|
-      if !OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order).nil?
-        a = OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order)
-        a.quantity = order_line[1][1].to_f
-        a.save!
-      else
-        a = OrderLine.new
-        a.order = @order
-        a.product = Product.find(order_line[0][1].to_i)
-        a.quantity = order_line[1][1].to_f
-        a.save!
+    @order_lines = []
+    if params["order"]
+      if !params["order"]["promotions"].nil?
+        params["order"]["promotions"].to_a.each do |a|
+          @order_lines << a[1].to_a
+        end
+      end
+      if !params["order"]["favorites"].nil?
+        params["order"]["favorites"].to_a.each do |a|
+          @order_lines << a[1].to_a
+        end
+      end
+      if !params["order"]["others"].nil?
+        params["order"]["others"].to_a.each do |a|
+          @order_lines << a[1].to_a
+        end
+      end
+    elsif params["order_lines"]
+      params["order_lines"].to_a.each do |a|
+        @order_lines << a[1].to_a
       end
     end
+
+    @order_lines.each do |order_line|
+      if !OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order).nil?
+        if order_line[1][1].to_f != 0
+          a = OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order)
+          a.quantity = order_line[1][1].to_f
+          a.save!
+        else
+          a = OrderLine.find_by(product_id: order_line[0][1].to_i, order: @order)
+          a.destroy!
+        end
+      else
+        if order_line[1][1].to_f != 0
+          a = OrderLine.new
+          a.order = @order
+          a.product = Product.find(order_line[0][1].to_i)
+          a.quantity = order_line[1][1].to_f
+          a.save!
+        end
+      end
+    end
+
+
 
     if !params["delivery_date"].nil? && !params["delivery_date"].to_datetime.nil? && params["delivery_date"].to_datetime > DateTime.now
       @order.delivery_date = params["delivery_date"].to_datetime
@@ -192,11 +206,19 @@ class OrdersController < ApplicationController
       @order.status = "En cours"
     end
 
-    @order.save!
-
-    if @order.delivery_date.nil?
+    if @order.order_lines.first.nil?
+      @order.destroy!
+      redirect_to restaurant_index_validated_path(@restaurant)
+    elsif @order.delivery_date.nil?
+      @order.save!
       redirect_to restaurant_index_pending_path(@restaurant)
     else
+      @document = Document.find_by(order: @order, document_type: "Bon de commande")
+      @document.update(
+        title: "Commande #{@order.relation.supplier.name} effectuée le #{@order.created_at} pour le #{@order.delivery_date}",
+        document_type: "Bon de commande",
+        order: @order)
+      @order.save!
       redirect_to restaurant_index_validated_path(@restaurant)
     end
   end

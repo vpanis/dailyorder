@@ -1,0 +1,82 @@
+<div class="container">
+
+  <div class="box">
+
+    <div class="dashboard-head">
+      <div style="display: flex; justify-content: space-between; width: 100%;">
+        <div>
+          <%= link_to restaurant_path(@restaurant), class: "link-to" do %>
+            <i class="fa fa-arrow-left" aria-hidden="true"></i>
+          <% end %>
+        </div>
+        <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
+          <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
+            <i class="fa fa-pencil" aria-hidden="true"></i>
+          <% end %>
+        </div>
+        <div style="width: 16px;">
+        </div>
+      </div>
+      <h2 class="dashboard-head-name"><%= @restaurant.name %></h2>
+      <p class="text-center" style="font-size: 14px; margin: 10px;">Rechercher un fournisseur.</p>
+      <div class="navbar-wagon-middle text-center"">
+
+        <!-- Search form -->
+        <%= form_tag new_restaurant_relation_path(@restaurant), method: :get, class: "navbar-wagon-search large" do %>
+          <%= text_field_tag :query, params[:query],
+                            id: "supplier_search",
+                            placeholder: "Trouver un fournisseur",
+                            onfocus: "this.placeholder = ''",
+                            onblur: "this.placeholder = 'Trouver un fournisseur'",
+                            class: "navbar-wagon-search-input large" %>
+          <%= button_tag(type: "submit", class: "navbar-wagon-search-btn") do %>
+            <i class="fa fa-search"></i>
+          <% end %>
+        <% end %>
+
+      </div>
+    </div>
+
+
+    <% if @suppliers.first.nil? %>
+
+      <p class="text-center" style="font-size: 14px; margin: 10px;">Aucun résultat de recherche.</p>
+
+    <% else %>
+
+      <p class="text-center" style="font-size: 14px; margin: 10px;">Résultats pour "<%= params[:query] %>"</p>
+
+      <div class="dashboard-body">
+        <div class="chapter">
+
+          <% @suppliers.each do |supplier|%>
+
+            <%= link_to !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : restaurant_relations_path(@restaurant, supplier_id: supplier), method: !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : :post, class: "item-link" do %>
+
+              <div class="item-user">
+                <div class="item-user-text">
+                  <p><%= supplier.name %></p>
+                  <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>
+                  <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= supplier.phone_number %></p>
+                </div>
+                <div class="item-user-icon">
+                  <% if !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? %>
+                    <p class="unlock"><i class="fa fa-unlock" aria-hidden="true"></i></p>
+                  <% else %>
+                    <p class="lock"><i class="fa fa-lock" aria-hidden="true"></i></p>
+                  <% end %>
+                </div>
+              </div>
+
+            <% end %>
+
+          <% end %>
+
+        </div>
+
+      </div>
+
+    <% end %>
+
+  </div>
+</div>

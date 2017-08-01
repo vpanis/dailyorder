@@ -31,11 +31,13 @@ ActiveRecord::Schema.define(version: 20170708160209) do
   end
 
   create_table "delivery_conditions", force: :cascade do |t|
-    t.integer  "relation_id"
-    t.datetime "order_deadline"
-    t.datetime "delivery_date"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.float    "order_deadlines", default: [],              array: true
+    t.integer  "order_value_min", default: 0
+    t.integer  "undelivery_days", default: [],              array: true
+    t.datetime "holidays",        default: [],              array: true
+    t.integer  "relation_id",                  null: false
+    t.datetime "created_at",                   null: false
+    t.datetime "updated_at",                   null: false
     t.index ["relation_id"], name: "index_delivery_conditions_on_relation_id", using: :btree
   end
 
@@ -43,15 +45,15 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.string   "title"
     t.string   "document_type"
     t.boolean  "sent",          default: false
-    t.integer  "order_id"
+    t.integer  "order_id",                      null: false
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["order_id"], name: "index_documents_on_order_id", using: :btree
   end
 
   create_table "favorites", force: :cascade do |t|
-    t.integer  "relation_id"
-    t.integer  "product_id"
+    t.integer  "relation_id", null: false
+    t.integer  "product_id",  null: false
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
     t.index ["product_id"], name: "index_favorites_on_product_id", using: :btree
@@ -59,9 +61,9 @@ ActiveRecord::Schema.define(version: 20170708160209) do
   end
 
   create_table "order_lines", force: :cascade do |t|
-    t.integer  "product_id"
-    t.integer  "order_id"
     t.float    "quantity"
+    t.integer  "product_id", null: false
+    t.integer  "order_id",   null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["order_id"], name: "index_order_lines_on_order_id", using: :btree
@@ -69,21 +71,21 @@ ActiveRecord::Schema.define(version: 20170708160209) do
   end
 
   create_table "orders", force: :cascade do |t|
-    t.integer  "relation_id"
     t.datetime "delivery_date"
+    t.string   "status",        default: "Validée"
+    t.integer  "relation_id",                       null: false
+    t.integer  "user_id",                           null: false
     t.datetime "created_at",                        null: false
     t.datetime "updated_at",                        null: false
-    t.string   "status",        default: "Validée"
-    t.integer  "user_id",                           null: false
     t.index ["relation_id"], name: "index_orders_on_relation_id", using: :btree
     t.index ["user_id"], name: "index_orders_on_user_id", using: :btree
   end
 
   create_table "pricing_conditions", force: :cascade do |t|
-    t.integer  "relation_id"
-    t.integer  "product_id"
     t.integer  "price"
     t.integer  "quantity_min", default: 0
+    t.integer  "relation_id",              null: false
+    t.integer  "product_id",               null: false
     t.datetime "created_at",               null: false
     t.datetime "updated_at",               null: false
     t.index ["product_id"], name: "index_pricing_conditions_on_product_id", using: :btree
@@ -94,31 +96,32 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.string   "name"
     t.string   "reference"
     t.string   "public_price"
+    t.string   "measuring_unit"
     t.string   "packaging"
     t.boolean  "is_discount",    default: false
-    t.integer  "supplier_id"
+    t.integer  "supplier_id",                    null: false
     t.datetime "created_at",                     null: false
     t.datetime "updated_at",                     null: false
-    t.string   "measuring_unit"
     t.index ["supplier_id"], name: "index_products_on_supplier_id", using: :btree
   end
 
   create_table "profiles", force: :cascade do |t|
-    t.integer  "user_id"
-    t.integer  "restaurant_id"
     t.string   "role"
+    t.integer  "user_id",       null: false
+    t.integer  "restaurant_id"
+    t.integer  "supplier_id"
     t.datetime "created_at",    null: false
     t.datetime "updated_at",    null: false
     t.index ["restaurant_id"], name: "index_profiles_on_restaurant_id", using: :btree
+    t.index ["supplier_id"], name: "index_profiles_on_supplier_id", using: :btree
     t.index ["user_id"], name: "index_profiles_on_user_id", using: :btree
   end
 
   create_table "relations", force: :cascade do |t|
-    t.integer  "restaurant_id"
-    t.integer  "supplier_id"
-    t.integer  "order_value_min", default: 0
-    t.datetime "created_at",                  null: false
-    t.datetime "updated_at",                  null: false
+    t.integer  "restaurant_id", null: false
+    t.integer  "supplier_id",   null: false
+    t.datetime "created_at",    null: false
+    t.datetime "updated_at",    null: false
     t.index ["restaurant_id"], name: "index_relations_on_restaurant_id", using: :btree
     t.index ["supplier_id"], name: "index_relations_on_supplier_id", using: :btree
   end
@@ -188,6 +191,7 @@ ActiveRecord::Schema.define(version: 20170708160209) do
   add_foreign_key "pricing_conditions", "relations"
   add_foreign_key "products", "suppliers"
   add_foreign_key "profiles", "restaurants"
+  add_foreign_key "profiles", "suppliers"
   add_foreign_key "profiles", "users"
   add_foreign_key "relations", "restaurants"
   add_foreign_key "relations", "suppliers"
