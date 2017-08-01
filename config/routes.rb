@@ -17,9 +17,8 @@ Rails.application.routes.draw do
 
     root to: 'pages#home'
 
-    resources :products, :only => [:index]
-
     resources :restaurants do
+      resources :products, :only => [:index]
       resources :profiles, only: [:index, :new, :create, :edit, :update]
       resources :suppliers, only: [:index]
       resources :relations, only: [:index, :new, :create, :edit, :update, :destroy]

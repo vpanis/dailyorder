@@ -1,6 +1,7 @@
 class ProductsController < ApplicationController
 
   def index
+    @restaurant = Restaurant.find(params[:restaurant_id])
     @products = policy_scope(Product)
     if params[:query].present?
       @products = Product.search_product(params[:query])

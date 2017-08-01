@@ -28,10 +28,10 @@
                      autocomplete: "off"
     = submit_tag "go", class: "btn-search" -->
 
-  <% if (@restaurant && !current_page?(restaurant_profiles_path(@restaurant)) && !current_page?(restaurant_suppliers_path(@restaurant))) || current_page?(products_path) %>
+  <% if @restaurant && !current_page?(restaurant_profiles_path(@restaurant)) && !current_page?(restaurant_suppliers_path(@restaurant)) %>
     <div class="navbar-wagon-middle">
       <!-- Search form -->
-      <%= form_tag products_path, method: :get, class: "navbar-wagon-search" do %>
+      <%= form_tag restaurant_products_path(@restaurant), method: :get, class: "navbar-wagon-search" do %>
         <%= text_field_tag :query, params[:query],
                           id: "product_search",
                           placeholder: "Trouver un produit",
