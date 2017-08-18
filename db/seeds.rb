@@ -52,7 +52,7 @@ puts 'Creating Delivery Conditions...'
 everyday          = DeliveryCondition.create!(order_deadlines: [nil, 0, 0, 0, 0, 0, 0], undelivery_days: [0], holidays: [], relation: viande)
 monday_thursday   = DeliveryCondition.create!(order_deadlines: [nil, 2.days.ago, nil, nil, 1.day.ago, nil, nil], undelivery_days: [0, 2, 3, 5, 6] ,holidays: [], relation: boisson)
 tuesday_friday    = DeliveryCondition.create!(order_deadlines: [nil, nil, 3.days.ago, nil, nil, 1.days.ago, nil], undelivery_days: [0, 1, 3, 4, 6], holidays: [], relation: cafe)
-friday            = DeliveryCondition.create!(order_deadlines: [nil, nil, nil, nil, nil, 1.days.ago, nil], undelivery_days: [0, 1, 2, 3, 4, 6], holidays: [], relation: vin)
+friday            = DeliveryCondition.create!(order_deadlines: [nil, nil, nil, nil, nil, 1.5.days.ago, nil], undelivery_days: [0, 1, 2, 3, 4, 6], holidays: [], relation: vin)
 
 puts 'Creating Products...'
 
