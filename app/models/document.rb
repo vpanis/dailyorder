@@ -5,5 +5,5 @@ class Document < ApplicationRecord
   delegate :relation, :to => :order, :allow_nil => false
 
   validates :title, presence: true
-  validates :document_type, presence: true, inclusion: { in: ["Bon de commande", "Bon de livraison", "Facture", "Relevé de factures"] }
+  validates :document_type, presence: true, inclusion: { in: ["Bon de commande", "Relevé de commandes", "Bon de livraison", "Facture", "Relevé de factures"] }
 end

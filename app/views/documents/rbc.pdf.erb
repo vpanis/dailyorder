@@ -3,6 +3,8 @@
   <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
   <%= wicked_pdf_javascript_include_tag "number_pages" %>
 </head>
+
+
 <div class="container" style='page-break-after:always;'>
   <h2 style="color: $green; text-align: center;"><strong><%= "#{@document.document_type} : #{@document.title}" %></strong></h2>
 <br>
