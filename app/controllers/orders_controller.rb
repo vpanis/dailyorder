@@ -91,6 +91,7 @@ class OrdersController < ApplicationController
       @document = Document.create(
         title: "Commande #{@order.relation.supplier.name} effectuée le #{@order.created_at} pour le #{@order.delivery_date}",
         document_type: "Bon de commande",
+        relation: @order.relation,
         order: @order)
       @order.save!
       if @order.delivery_date.nil?
@@ -217,6 +218,7 @@ class OrdersController < ApplicationController
       @document.update(
         title: "Commande #{@order.relation.supplier.name} effectuée le #{@order.created_at} pour le #{@order.delivery_date}",
         document_type: "Bon de commande",
+        relation: @relation,
         order: @order)
       @order.save!
       redirect_to restaurant_index_validated_path(@restaurant)

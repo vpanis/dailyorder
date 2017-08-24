@@ -1,11 +1,18 @@
 class OrderMailer < ApplicationMailer
-  def send_noon_order(user_id, restaurant_id)
-    @user = User.find(user_id)
-    @restaurant = Restaurant.find(restaurant_id)
+  def send_orders(supplier_id, orders_ids, document_id)
+    @supplier = Supplier.find(supplier_id)
+    @orders = orders_ids.map { |order_id| Order.find(order_id) }
+    @document = Document.find(document_id)
+
+    attachments["rc_#{@document.created_at.strftime("%d_%m_%Y")}.pdf"] = WickedPdf.new.pdf_from_string(
+      render_to_string(
+        pdf: 'rc_#{@document.created_at.strftime("%d_%m_%Y")}.pdf',
+        template: 'rc.pdf.erb')
+    )
 
     mail(
-      to:       @user.email,
-      subject:  "Le restaurant #{@restaurant.name} a été crée !"
+      to:       @supplier.email,
+      subject:  "DailyOrder : #{@document.title}"
     )
   end
 end

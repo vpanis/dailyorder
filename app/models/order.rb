@@ -5,6 +5,7 @@ class Order < ApplicationRecord
   belongs_to :user
 
   delegate :restaurant, :to => :relation
+  delegate :supplier, :to => :relation
 
   validates :status, presence: true, inclusion: { in: ["En cours", "Validée", "Envoyée"] }
 

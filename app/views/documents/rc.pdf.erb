@@ -1,0 +1,68 @@
+<head>
+  <meta charset='utf-8' />
+  <%= wicked_pdf_stylesheet_link_tag "pdf" -%>
+  <%= wicked_pdf_javascript_include_tag "number_pages" %>
+</head>
+
+
+<div class="container">
+
+  <% @orders.each do |order| %>
+
+    <div style='page-break-after:always;'>
+
+      <h2 style="color: $green; text-align: center;"><strong><%= "Bon de commande pour #{order.restaurant} à livrer le #{order.delivery_date}" %></strong></h2>
+      <br>
+      <p>
+        <strong>Donneur d'ordre :</strong> <%= order.restaurant.name %>
+        <br>
+        <strong>Téléphone :</strong> <%= order.restaurant.phone_number %>
+        <br>
+        <strong>Email :</strong> <%= order.restaurant.email %>
+        <br>
+        <br>
+        <span>
+          <strong>Date de livraison :</strong> <%= order.delivery_date.strftime("%d/%m/%Y") %>
+        </span>
+        <br>
+        <br>
+        <span>
+          <strong>Adresse de livraison :</strong>
+          <br>
+          <%= set_address(order.restaurant) %>
+        </span>
+        <br>
+        <br>
+        <span>
+          <strong>Adresse de facturation :</strong>
+          <br>
+          <%= set_address(order.restaurant) %>
+        </span>
+        <br>
+        <br>
+
+        <table>
+          <tr>
+            <th>Produits</th>
+            <th>Quantités</th>
+            <th>Unités</th>
+          </tr>
+
+          <% order.order_lines.each do |order_line| %>
+          <tr>
+            <td><%= order_line.product.name %></td>
+            <td><%= order_line.quantity %></td>
+            <td><%= order_line.product.measuring_unit %></td>
+          </tr>
+          <% end %>
+
+        </table>
+
+      </p>
+
+    </div>
+
+  <% end %>
+
+
+</div>

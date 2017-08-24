@@ -2,36 +2,45 @@ namespace :order do
 
   desc "Sending orders"
 
-  task send_all_noon_order: :environment do
-    orders = Order.where(status: "Validée").select { |order| order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)] % order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)].floor == 0.5 }
+  task send: :environment do
 
-  end
+    orders = []
+    suppliers =[]
 
-  task send_all_afternoon_order: :environment do
-    orders = Order.where(status: "Validée").select { |order| order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)] % order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)].floor == 0.25 }
-
-  end
-
-  task send_all_midnight_order: :environment do
-    orders = Order.where(status: "En cours").select { |order| order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)] % order.relation.delivery_conditions.first.order_deadlines[set_wday_integer(Date.today)].floor == 0 }
-
-  end
-
-end
-
-
-
-
-
-# lib/tasks/user.rake
-namespace :user do
-  desc "Enriching all users with Clearbit (async)"
-  task :update_all => :environment do
-    users = User.all
-    puts "Enqueuing update of #{users.size} users..."
-    users.each do |user|
-      UpdateUserJob.perform_later(user.id)
+    Order.where(status: "Validée").each do |order|
+      if order.delivery_date.strftime("%A").downcase == "sunday"
+        w_day = 0
+      elsif order.delivery_date.strftime("%A").downcase == "monday"
+        w_day = 1
+      elsif order.delivery_date.strftime("%A").downcase == "tuesday"
+        w_day = 2
+      elsif order.delivery_date.strftime("%A").downcase == "wednesday"
+        w_day = 3
+      elsif order.delivery_date.strftime("%A").downcase == "thursday"
+        w_day = 4
+      elsif order.delivery_date.strftime("%A").downcase == "friday"
+        w_day = 5
+      elsif order.delivery_date.strftime("%A").downcase == "saturday"
+        w_day = 6
+      end
+      if order.delivery_date - order.relation.delivery_conditions.first.order_deadlines[w_day].days < DateTime.now
+        order.status = "Envoyée"
+        order.save
+        orders << order
+        suppliers << order.supplier
+      end
     end
-    # rake task will return when all jobs are _enqueued_ (not done).
+
+    orders = orders.map! { |order| order.id }
+
+    suppliers.each do |supplier|
+
+      document = Document.create(
+        title: "Relevé de commandes du #{DateTime.now.strftime("%m/%d/%Y")}",
+        document_type: "Relevé de commandes",
+        supplier: supplier)
+
+      OrderMailer.send_orders(supplier.id, orders, document.id).deliver_now
+
   end
 end

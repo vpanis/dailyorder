@@ -14,6 +14,13 @@ class DocumentsController < ApplicationController
                  template: "documents/bc.pdf.erb"
         end
       end
+    elsif @document.document_type == "Relevé de commandes"
+      respond_to do |format|
+        format.pdf do
+          render pdf: "rc.pdf",
+                 template: "documents/rc.pdf.erb"
+        end
+      end
     elsif @document.document_type == "Bon de livraison"
       respond_to do |format|
         format.pdf do
