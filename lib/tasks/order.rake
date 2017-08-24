@@ -40,7 +40,7 @@ namespace :order do
         document_type: "Relevé de commandes",
         supplier: supplier)
 
-      OrderMailer.send_orders(supplier, orders, document).deliver_now
+      OrderMailer.send_orders(supplier.id, orders, document.id).deliver_now
 
     end
   end
