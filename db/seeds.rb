@@ -13,6 +13,7 @@ Favorite.destroy_all
 DeliveryCondition.destroy_all
 Order.destroy_all
 OrderLine.destroy_all
+Document.destroy_all
 
 puts 'Creating Restaurants...'
 
