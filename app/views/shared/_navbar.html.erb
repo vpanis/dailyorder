@@ -28,7 +28,7 @@
                      autocomplete: "off"
     = submit_tag "go", class: "btn-search" -->
 
-  <% if @restaurant && !current_page?(restaurant_profiles_path(@restaurant)) && !current_page?(restaurant_suppliers_path(@restaurant)) %>
+  <% if @restaurant && @restaurant.id != nil && !current_page?(restaurant_profiles_path(@restaurant)) && !current_page?(restaurant_suppliers_path(@restaurant)) %>
     <div class="navbar-wagon-middle">
       <!-- Search form -->
       <%= form_tag restaurant_products_path(@restaurant), method: :get, class: "navbar-wagon-search" do %>
