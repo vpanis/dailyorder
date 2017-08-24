@@ -42,5 +42,7 @@ namespace :order do
 
       OrderMailer.send_orders(supplier.id, orders, document.id).deliver_now
 
+    end
+
   end
 end
