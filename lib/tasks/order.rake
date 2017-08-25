@@ -27,7 +27,7 @@ namespace :order do
         order.status = "Envoyée"
         order.save
         orders << order
-        suppliers << order.supplier
+        suppliers << order.supplier if !suppliers.include?(order.supplier)
       end
     end
 
