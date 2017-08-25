@@ -39,6 +39,13 @@ namespace :order do
       supplier_orders = orders.select{ |order| order.supplier == supplier }
       supplier_orders = supplier_orders.map! { |supplier_order| supplier_order.id }
       OrderMailer.send_orders(supplier.id, supplier_orders, document.id).deliver_now
+      document.sent = true
+      document.save!
+      supplier_orders.each do |supplier_order|
+        bc = Document.find_by(document_type: "Bon de commande", relation: supplier_order.relation)
+        bc.sent = true
+        bc.save!
+      end
     end
   end
 end

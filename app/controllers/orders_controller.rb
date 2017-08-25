@@ -90,9 +90,11 @@ class OrdersController < ApplicationController
     else
       @order.save!
       @document = Document.create(
-        title: "Commande #{@order.relation.supplier.name} effectuée le #{@order.created_at} pour le #{@order.delivery_date}",
+        title: "Commande #{@order.supplier.name} effectuée le #{@order.created_at} pour le #{@order.delivery_date}",
         document_type: "Bon de commande",
         relation: Relation.find(params["relation_id"].to_i),
+        restaurant: @order.restaurant,
+        supplier: @order.supplier,
         order: @order)
       if @order.delivery_date.nil?
         redirect_to restaurant_index_pending_path(@restaurant)
