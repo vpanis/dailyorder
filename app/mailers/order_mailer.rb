@@ -7,7 +7,7 @@ class OrderMailer < ApplicationMailer
     attachments["rc_#{@document.created_at.strftime("%d_%m_%Y")}.pdf"] = WickedPdf.new.pdf_from_string(
       render_to_string(
         pdf: 'rc_#{@document.created_at.strftime("%d_%m_%Y")}.pdf',
-        template: 'rc.pdf.erb')
+        template: 'documents/rc.pdf.erb')
     )
 
     mail(
