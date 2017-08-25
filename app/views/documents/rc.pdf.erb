@@ -11,7 +11,7 @@
 
     <div style='page-break-after:always;'>
 
-      <h2 style="color: $green; text-align: center;"><strong><%= "Bon de commande pour #{order.restaurant} à livrer le #{order.delivery_date}" %></strong></h2>
+      <h2 style="color: $green; text-align: center;"><strong><%= "Bon de commande pour #{order.restaurant.name} à livrer le #{order.delivery_date.strftime("%d/%m/%Y")}" %></strong></h2>
       <br>
       <p>
         <strong>Donneur d'ordre :</strong> <%= order.restaurant.name %>

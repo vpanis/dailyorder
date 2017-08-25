@@ -36,7 +36,7 @@ namespace :order do
     suppliers.each do |supplier|
 
       document = Document.create(
-        title: "Relevé de commandes du #{DateTime.now.strftime("%m/%d/%Y")}",
+        title: "Relevé de commandes du #{DateTime.now.strftime("%d/%m/%Y")}",
         document_type: "Relevé de commandes",
         supplier: supplier)
 
