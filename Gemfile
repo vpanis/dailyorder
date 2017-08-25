@@ -35,7 +35,7 @@ gem 'bootstrap3-datetimepicker-rails', '~> 4.17.47'
 gem 'wicked_pdf'
 gem 'wkhtmltopdf-binary'
 
-# Gems to Search
+# Gem to Search
 gem 'pg_search'
 
 # Gems to import excel file
@@ -45,6 +45,9 @@ gem "iconv", "~> 1.0.3"
 # Gems for asynchronism
 gem 'sidekiq'
 gem 'sidekiq-failures', github: 'mhfs/sidekiq-failures'
+
+#Gem for admin interface
+gem 'forest_liana'
 
 group :development, :test do
   gem 'binding_of_caller'

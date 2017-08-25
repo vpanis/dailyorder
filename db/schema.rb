@@ -45,10 +45,16 @@ ActiveRecord::Schema.define(version: 20170708160209) do
     t.string   "title"
     t.string   "document_type"
     t.boolean  "sent",          default: false
-    t.integer  "order_id",                      null: false
+    t.integer  "order_id"
+    t.integer  "relation_id"
+    t.integer  "restaurant_id"
+    t.integer  "supplier_id"
     t.datetime "created_at",                    null: false
     t.datetime "updated_at",                    null: false
     t.index ["order_id"], name: "index_documents_on_order_id", using: :btree
+    t.index ["relation_id"], name: "index_documents_on_relation_id", using: :btree
+    t.index ["restaurant_id"], name: "index_documents_on_restaurant_id", using: :btree
+    t.index ["supplier_id"], name: "index_documents_on_supplier_id", using: :btree
   end
 
   create_table "favorites", force: :cascade do |t|
@@ -181,6 +187,9 @@ ActiveRecord::Schema.define(version: 20170708160209) do
 
   add_foreign_key "delivery_conditions", "relations"
   add_foreign_key "documents", "orders"
+  add_foreign_key "documents", "relations"
+  add_foreign_key "documents", "restaurants"
+  add_foreign_key "documents", "suppliers"
   add_foreign_key "favorites", "products"
   add_foreign_key "favorites", "relations"
   add_foreign_key "order_lines", "orders"
