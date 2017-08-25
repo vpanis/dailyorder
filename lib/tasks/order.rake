@@ -23,25 +23,22 @@ namespace :order do
       elsif order.delivery_date.strftime("%A").downcase == "saturday"
         w_day = 6
       end
-      #if order.delivery_date - order.relation.delivery_conditions.first.order_deadlines[w_day].days < DateTime.now
+      if order.delivery_date - order.relation.delivery_conditions.first.order_deadlines[w_day].days < DateTime.now
         order.status = "Envoyée"
         order.save
         orders << order
         suppliers << order.supplier
-      #end
+      end
     end
 
-    orders = orders.map! { |order| order.id }
-
     suppliers.each do |supplier|
-
       document = Document.create(
         title: "Relevé de commandes du #{DateTime.now.strftime("%d/%m/%Y")}",
         document_type: "Relevé de commandes",
         supplier: supplier)
-
-      OrderMailer.send_orders(supplier.id, orders, document.id).deliver_now
-
+      supplier_orders = orders.select{ |order| order.supplier == supplier }
+      supplier_orders = supplier_orders.map! { |supplier_order| supplier_order.id }
+      OrderMailer.send_orders(supplier.id, supplier_orders, document.id).deliver_now
     end
   end
 end
