@@ -12,7 +12,7 @@ class OrderMailer < ApplicationMailer
 
     mail(
       to:       @supplier.email,
-      subject:  "DailyOrder : #{@document.title}"
+      subject:  "#{@document.title}"
     )
   end
 end
