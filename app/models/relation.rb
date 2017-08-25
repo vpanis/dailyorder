@@ -4,7 +4,7 @@ class Relation < ApplicationRecord
   has_many :favorites, dependent: :destroy
   has_many :orders, dependent: :destroy
   has_many :products, through: :supplier
-  has_many :documents
+  has_many :documents, dependent: :destroy
   belongs_to :restaurant
   belongs_to :supplier
 

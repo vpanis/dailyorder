@@ -2,6 +2,7 @@ class Restaurant < ApplicationRecord
   has_many :profiles, dependent: :destroy
   has_many :users, through: :profiles
   has_many :relations, dependent: :destroy
+  has_many :documents, dependent: :destroy
 
   has_many :orders, through: :relations
   has_many :delivery_conditions, through: :relations
