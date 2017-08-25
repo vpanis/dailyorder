@@ -4,7 +4,10 @@ class CreateDocuments < ActiveRecord::Migration[5.0]
       t.string :title
       t.string :document_type
       t.boolean :sent, default: false
-      t.references :order, foreign_key: true, null: false
+      t.references :order, foreign_key: true
+      t.references :relation, foreign_key: true
+      t.references :restaurant, foreign_key: true
+      t.references :supplier, foreign_key: true
 
       t.timestamps
     end
