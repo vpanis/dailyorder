@@ -25,6 +25,7 @@ class OrdersController < ApplicationController
   end
 
   def new
+    @date = DateTime.now
     @restaurant = Restaurant.find(params[:restaurant_id])
     @supplier = Supplier.find(params[:supplier_id])
     @relation = Relation.find_by(restaurant: @restaurant, supplier: @supplier)
@@ -147,6 +148,7 @@ class OrdersController < ApplicationController
   end
 
   def update
+    @date = DateTime.now
     @restaurant = Restaurant.find(params["restaurant_id"])
     @order = Order.find(params["id"])
     authorize @order
