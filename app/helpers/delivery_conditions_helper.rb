@@ -25,7 +25,7 @@ module DeliveryConditionsHelper
       if item.nil?
         order_limits[index] = order_limits[index + 1] if !order_limits[index + 1].nil?
         order_limits[index] = order_limits[0] + 1 if order_limits[index + 1].nil?
-      elsif item % item.floor == 0.5
+      elsif item == 0.5
         if (date - 2.hours).hour < 12
           for i in 1..(item.floor + 1)
             order_limits[index - i] = i
@@ -35,7 +35,27 @@ module DeliveryConditionsHelper
             order_limits[index - i] = i + 1
           end
         end
-      elsif item % item.floor == 0.75
+      elsif item == 0.75
+        if (date - 2.hours).hour < 18
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i
+          end
+        else
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i + 1
+          end
+        end
+      elsif (item + 1) % (item.floor + 1) == 0.5
+        if (date - 2.hours).hour < 12
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i
+          end
+        else
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i + 1
+          end
+        end
+      elsif (item + 1) % (item.floor + 1) == 0.75
         if (date - 2.hours).hour < 18
           for i in 1..(item.floor + 1)
             order_limits[index - i] = i
@@ -53,19 +73,19 @@ module DeliveryConditionsHelper
     end
 
     if date.strftime("%A").downcase == "sunday"
-      "+#{order_limits[0]}d"
+      order_limits[0]
     elsif date.strftime("%A").downcase == "monday"
-      "+#{order_limits[1]}d"
+      order_limits[1]
     elsif date.strftime("%A").downcase == "tuesday"
-      "+#{order_limits[2]}d"
+      order_limits[2]
     elsif date.strftime("%A").downcase == "wednesday"
-      "+#{order_limits[3]}d"
+      order_limits[3]
     elsif date.strftime("%A").downcase == "thursday"
-      "+#{order_limits[4]}d"
+      order_limits[4]
     elsif date.strftime("%A").downcase == "friday"
-      "+#{order_limits[5]}d"
+      order_limits[5]
     elsif date.strftime("%A").downcase == "saturday"
-      "+#{order_limits[6]}d"
+      order_limits[6]
     end
 
   end
