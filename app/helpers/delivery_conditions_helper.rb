@@ -16,4 +16,57 @@ module DeliveryConditionsHelper
       6
     end
   end
+
+  def set_starting_day(relation, date)
+
+    order_limits = [1, 1, 1, 1, 1, 1, 2]
+
+    relation.delivery_conditions.first.order_deadlines.each_with_index do |item, index|
+      if item.nil?
+        order_limits[index] = order_limits[index + 1] if !order_limits[index + 1].nil?
+        order_limits[index] = order_limits[0] + 1 if order_limits[index + 1].nil?
+      elsif item % item.floor == 0.5
+        if (date - 2.hours).hour < 12
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i
+          end
+        else
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i + 1
+          end
+        end
+      elsif item % item.floor == 0.75
+        if (date - 2.hours).hour < 18
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i
+          end
+        else
+          for i in 1..(item.floor + 1)
+            order_limits[index - i] = i + 1
+          end
+        end
+      else
+        for i in 1..(item + 1)
+          order_limits[index - i] = i
+        end
+      end
+    end
+
+    if date.strftime("%A").downcase == "sunday"
+      "+#{order_limits[0]}d"
+    elsif date.strftime("%A").downcase == "monday"
+      "+#{order_limits[1]}d"
+    elsif date.strftime("%A").downcase == "tuesday"
+      "+#{order_limits[2]}d"
+    elsif date.strftime("%A").downcase == "wednesday"
+      "+#{order_limits[3]}d"
+    elsif date.strftime("%A").downcase == "thursday"
+      "+#{order_limits[4]}d"
+    elsif date.strftime("%A").downcase == "friday"
+      "+#{order_limits[5]}d"
+    elsif date.strftime("%A").downcase == "saturday"
+      "+#{order_limits[6]}d"
+    end
+
+  end
 end

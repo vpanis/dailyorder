@@ -123,8 +123,8 @@
         $('.calendar').datepicker({
             format: "dd/mm/yyyy",
             weekStart: 1,
-            startDate: "+1d",
-            daysOfWeekDisabled: [0],
+            startDate: <%= set_starting_day(@relation, DateTime.now) %>,
+            daysOfWeekDisabled: <%= @relation.delivery_conditions.first.undelivery_days %>,
             todayHighlight: true,
             multidate: false,
             language: 'fr',

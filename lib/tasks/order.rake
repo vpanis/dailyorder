@@ -23,7 +23,7 @@ namespace :order do
       elsif order.delivery_date.strftime("%A").downcase == "saturday"
         w_day = 6
       end
-      if order.delivery_date - order.relation.delivery_conditions.first.order_deadlines[w_day].days < DateTime.now
+      if order.delivery_date - order.relation.delivery_conditions.first.order_deadlines[w_day].days < DateTime.now - 2.hours
         order.status = "Envoyée"
         order.save
         orders << order
