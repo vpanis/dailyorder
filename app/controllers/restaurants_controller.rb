@@ -51,6 +51,6 @@ class RestaurantsController < ApplicationController
   end
 
   def restaurant_params
-    params.require(:restaurant).permit(:email, :name, :address, :zip, :locality, :phone_number, :siret)
+    params.require(:restaurant).permit(:email, :name, :address, :zip, :locality, :phone_number, :siret, :photo)
   end
 end
