@@ -10,7 +10,7 @@
           <i class="fa fa-arrow-left" aria-hidden="true"></i>
         <% end %>
       </div>
-      <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
+      <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= set_restaurant_photo(@restaurant) %>)">
         <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
           <i class="fa fa-pencil" aria-hidden="true"></i>
         <% end %>
