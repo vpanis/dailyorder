@@ -1,8 +1,7 @@
 module RestaurantsHelper
   def set_restaurant_photo(restaurant)
-    avatar_url = restaurant.photo
-    avatar_url = cl_image_path(restaurant.photo.public_id, height: 100, width: 100, crop: :fill) if avatar_url.nil? && restaurant.photo
-    avatar_url.nil? ? asset_path('default_restaurant.png') : avatar_url
+    restaurant_photo_url = cl_image_path(restaurant.photo.path, height: 100, width: 100, background: "black", crop: "pad") if restaurant.photo
+    restaurant_photo_url.nil? ? asset_path('default_restaurant.png') : restaurant_photo_url
   end
 
   def set_address(restaurant)

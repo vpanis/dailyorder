@@ -24,7 +24,7 @@
 
                 <div class="card-company">
 
-                  <div class="card-company-image" style="background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= profile.restaurant.photo.nil? ? "" : (cl_image_path profile.restaurant.photo.public_id, width: 100, height: 100, crop: :fill) %>);"></div>
+                  <div class="card-company-image" style="background-image:linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= set_restaurant_photo(profile.restaurant) %>)"></div>
 
                   <h2 class="card-company-name"><%= profile.restaurant.name %></h2>
 

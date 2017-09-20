@@ -20,7 +20,7 @@
 
             <%= f.input :phone_number, label: "Téléphone", hint: "Nous avons besoin de votre numéro de téléphone pour vous contacter en cas de problème sur votre commande.", required: true, autofocus: true %>
 
-            <%= f.input :sector, label: "Secteur d'activité", collection: ["Boucherie", "Poissonnerie", "Epicerie", "Crèmerie", "Fruits et légumes", "Boissons", "Vins et spiritueux", "Cafés", "Autres"], required: true, autofocus: true %>
+            <%= f.input :sector, label: "Secteur d'activité", collection: :sector, required: true, autofocus: true %>
 
             <%= f.input :siret, label: "Numéro SIRET", required: true, autofocus: true %>
 

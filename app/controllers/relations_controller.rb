@@ -9,11 +9,12 @@ class RelationsController < ApplicationController
 
   def new
     @restaurant = Restaurant.find(params[:restaurant_id])
+    @suppliers = Supplier.all
     authorize @restaurant
     if params[:query].present?
-      @suppliers = Supplier.search_supplier(params[:query])
+      @searched_suppliers = Supplier.search_supplier(params[:query])
     else
-      @suppliers = []
+      @searched_suppliers = []
     end
   end
 

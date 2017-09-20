@@ -13,6 +13,8 @@
   width: 80px;
   height: 80px;
   position: relative;
+  border: $green 2px solid;
+  border-radius: 5px;
   a.btn {
     position: absolute;
     top: -10px;

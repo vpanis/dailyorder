@@ -9,7 +9,7 @@
             <i class="fa fa-arrow-left" aria-hidden="true"></i>
           <% end %>
         </div>
-        <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.2)), url(<%= @restaurant.photo.nil? ? "" : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
+        <div class="dashboard-head-image" style="background-image:linear-gradient(rgba(0,0,0,0), rgba(0,0,0,0)), url(<%= @restaurant.photo.nil? ? asset_path('default_restaurant.png') : (cl_image_path @restaurant.photo.public_id, width:100, height: 100, crop: :fill) %>)">
           <%= link_to edit_restaurant_path(@restaurant), class: "btn btn-primary" do %>
             <i class="fa fa-pencil" aria-hidden="true"></i>
           <% end %>
@@ -38,9 +38,32 @@
     </div>
 
 
-    <% if @suppliers.first.nil? %>
+    <% if @searched_suppliers.first.nil? %>
 
-      <p class="text-center" style="font-size: 14px; margin: 10px;">Aucun résultat de recherche.</p>
+      <p class="text-center" style="font-size: 14px; margin: 10px;">Aucun résultat de recherche. Voici tous les fournisseurs :</p>
+
+      <% @suppliers.sort_by { |s| s.name }.each do |supplier|%>
+
+        <%= link_to !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : restaurant_relations_path(@restaurant, supplier_id: supplier), method: !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : :post, class: "item-link" do %>
+
+          <div class="item-user">
+            <div class="item-user-text">
+              <p><%= supplier.name %></p>
+              <p><i class="fa fa-envelope-o" aria-hidden="true"></i> : <%= supplier.email %></p>
+              <p><i class="fa fa-mobile" aria-hidden="true"></i>  : <%= supplier.phone_number %></p>
+            </div>
+            <div class="item-user-icon">
+              <% if !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? %>
+                <p class="unlock"><i class="fa fa-unlock" aria-hidden="true"></i></p>
+              <% else %>
+                <p class="lock"><i class="fa fa-lock" aria-hidden="true"></i></p>
+              <% end %>
+            </div>
+          </div>
+
+        <% end %>
+
+      <% end %>
 
     <% else %>
 
@@ -49,7 +72,7 @@
       <div class="dashboard-body">
         <div class="chapter">
 
-          <% @suppliers.each do |supplier|%>
+          <% @searched_suppliers.each do |supplier|%>
 
             <%= link_to !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : restaurant_relations_path(@restaurant, supplier_id: supplier), method: !Relation.find_by(supplier: supplier, restaurant: @restaurant).nil? ? "#" : :post, class: "item-link" do %>
 
