@@ -28,46 +28,46 @@ module DeliveryConditionsHelper
       elsif item == 0.5
         if (date - 2.hours).hour < 12
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 1
+            order_limits[index - i] = i
           end
         else
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 2
+            order_limits[index - i] = i + 1
           end
         end
       elsif item == 0.75
         if (date - 2.hours).hour < 18
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 1
+            order_limits[index - i] = i
           end
         else
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 2
+            order_limits[index - i] = i + 1
           end
         end
       elsif (item + 1) % (item.floor + 1) == 0.5
         if (date - 2.hours).hour < 12
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 1
+            order_limits[index - i] = i
           end
         else
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 2
+            order_limits[index - i] = i + 1
           end
         end
       elsif (item + 1) % (item.floor + 1) == 0.75
         if (date - 2.hours).hour < 18
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 1
+            order_limits[index - i] = i
           end
         else
           for i in 1..(item.floor + 1)
-            order_limits[index - i] = i + 2
+            order_limits[index - i] = i + 1
           end
         end
       else
         for i in 1..(item + 1)
-          order_limits[index - i] = i + 1
+          order_limits[index - i] = i
         end
       end
     end
