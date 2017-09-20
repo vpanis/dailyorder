@@ -23,17 +23,17 @@ pv3 = Restaurant.create!(email: "panis.vincent@gmail.com", name: "Point de Vente
 
 puts 'Creating Users...'
 
-u1 = User.create!(admin: true, email: "vpanis@hotmail.fr", password: "12345678", first_name: "Vincent", last_name: "Panis", phone_number: "06.84.73.96.18")
+u1 = User.create!(admin: true, email: "vincent@dailyorder.co", password: "12345678", first_name: "Utilisateur", last_name: "Test", phone_number: "06.84.73.96.18")
 
 puts 'Creating Suppliers...'
 
-s1 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Ets Tribolet", address: "30 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.91", sector: "Boucherie", siret: "798 578 444 000 20")
-s2 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Ets Tafanel", address: "31 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.92", sector: "Boissons", siret: "798 578 333 000 20")
-s3 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Cafés Richard", address: "32 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.93", sector: "Cafés", siret: "798 578 222 000 20")
-s4 = Supplier.create!(email: 'vincent@dailyorder.co', name: "J'océane", address: "33 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.94", sector: "Poissonnerie", siret: "798 578 111 000 20")
-s5 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Benoit Brument Vins", address: "34 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.95", sector: "Vins et spiritueux", siret: "798 578 666 000 20")
-s6 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Les Vergers de Boulogne", address: "35 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.96", sector: "Fruits et légumes", siret: "798 578 777 000 20")
-s7 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Boucherie André", address: "40 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.10.80", sector: "Boucherie", siret: "798 578 444 000 10")
+s1 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 1", address: "30 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.91", sector: "Boucherie", siret: "798 578 444 000 20")
+s2 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 2", address: "31 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.92", sector: "Boissons", siret: "798 578 333 000 20")
+s3 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 3", address: "32 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.93", sector: "Cafés", siret: "798 578 222 000 20")
+s4 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 4", address: "33 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.94", sector: "Poissonnerie", siret: "798 578 111 000 20")
+s5 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 5", address: "34 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.95", sector: "Vins et spiritueux", siret: "798 578 666 000 20")
+s6 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 6", address: "35 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.08.96", sector: "Fruits et légumes", siret: "798 578 777 000 20")
+s7 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 7", address: "40 Rue Montorgueil", zip: "75001", locality: "Paris", phone_number: "01.46.12.10.80", sector: "Boucherie", siret: "798 578 444 000 10")
 
 puts 'Creating Profiles...'
 
