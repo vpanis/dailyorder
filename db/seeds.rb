@@ -38,8 +38,8 @@ s7 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Boucherie André", 
 puts 'Creating Profiles...'
 
 p1 = Profile.create!(user: u1, restaurant: pv1, role: "Profil admin")
-p2 = Profile.create!(user: u1, restaurant: pv1, role: "Profil admin")
-p3 = Profile.create!(user: u1, restaurant: pv1, role: "Profil admin")
+p2 = Profile.create!(user: u1, restaurant: pv2, role: "Profil admin")
+p3 = Profile.create!(user: u1, restaurant: pv3, role: "Profil admin")
 p4 = Profile.create!(user: u1, supplier: s1, role: "Profil admin")
 p5 = Profile.create!(user: u1, supplier: s2, role: "Profil admin")
 p6 = Profile.create!(user: u1, supplier: s3, role: "Profil admin")
