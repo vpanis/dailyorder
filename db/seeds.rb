@@ -23,7 +23,9 @@ pv3 = Restaurant.create!(email: "panis.vincent@gmail.com", name: "Point de Vente
 
 puts 'Creating Users...'
 
-u1 = User.create!(admin: true, email: "vincent@dailyorder.co", password: "12345678", first_name: "Utilisateur", last_name: "Test", phone_number: "06.84.73.96.18")
+u1 = User.create!(admin: true, email: "vincent@dailyorder.co", password: "12345678", first_name: "Vincent", last_name: "Utilisateur Test", phone_number: "06.84.73.96.18")
+u2 = User.create!(email: "abarry@mitcoms.com", password: "12345678", first_name: "Almamy", last_name: "Utilisateur Test", phone_number: "06.84.73.96.18")
+u3 = User.create!(email: "fanny.walter@mitcoms.com", password: "12345678", first_name: "Fanny", last_name: "Utilisateur Test", phone_number: "06.84.73.96.18")
 
 puts 'Creating Suppliers...'
 
@@ -37,16 +39,38 @@ s7 = Supplier.create!(email: 'vincent@dailyorder.co', name: "Fournisseur 7", add
 
 puts 'Creating Profiles...'
 
-p1 = Profile.create!(user: u1, restaurant: pv1, role: "Profil admin")
-p2 = Profile.create!(user: u1, restaurant: pv2, role: "Profil admin")
-p3 = Profile.create!(user: u1, restaurant: pv3, role: "Profil admin")
-p4 = Profile.create!(user: u1, supplier: s1, role: "Profil admin")
-p5 = Profile.create!(user: u1, supplier: s2, role: "Profil admin")
-p6 = Profile.create!(user: u1, supplier: s3, role: "Profil admin")
-p7 = Profile.create!(user: u1, supplier: s4, role: "Profil admin")
-p8 = Profile.create!(user: u1, supplier: s5, role: "Profil admin")
-p9 = Profile.create!(user: u1, supplier: s6, role: "Profil admin")
-p10 = Profile.create!(user: u1, supplier: s7, role: "Profil admin")
+u1p1 = Profile.create!(user: u1, restaurant: pv1, role: "Profil admin")
+u1p2 = Profile.create!(user: u1, restaurant: pv2, role: "Profil admin")
+u1p3 = Profile.create!(user: u1, restaurant: pv3, role: "Profil admin")
+u1p4 = Profile.create!(user: u1, supplier: s1, role: "Profil admin")
+u1p5 = Profile.create!(user: u1, supplier: s2, role: "Profil admin")
+u1p6 = Profile.create!(user: u1, supplier: s3, role: "Profil admin")
+u1p7 = Profile.create!(user: u1, supplier: s4, role: "Profil admin")
+u1p8 = Profile.create!(user: u1, supplier: s5, role: "Profil admin")
+u1p9 = Profile.create!(user: u1, supplier: s6, role: "Profil admin")
+u1p10 = Profile.create!(user: u1, supplier: s7, role: "Profil admin")
+
+u2p1 = Profile.create!(user: u2, restaurant: pv1, role: "Profil admin")
+u2p2 = Profile.create!(user: u2, restaurant: pv2, role: "Profil admin")
+u2p3 = Profile.create!(user: u2, restaurant: pv3, role: "Profil admin")
+u2p4 = Profile.create!(user: u2, supplier: s1, role: "Profil admin")
+u2p5 = Profile.create!(user: u2, supplier: s2, role: "Profil admin")
+u2p6 = Profile.create!(user: u2, supplier: s3, role: "Profil admin")
+u2p7 = Profile.create!(user: u2, supplier: s4, role: "Profil admin")
+u2p8 = Profile.create!(user: u2, supplier: s5, role: "Profil admin")
+u2p9 = Profile.create!(user: u2, supplier: s6, role: "Profil admin")
+u2p10 = Profile.create!(user: u2, supplier: s7, role: "Profil admin")
+
+u3p1 = Profile.create!(user: u3, restaurant: pv1, role: "Profil admin")
+u3p2 = Profile.create!(user: u3, restaurant: pv2, role: "Profil admin")
+u3p3 = Profile.create!(user: u3, restaurant: pv3, role: "Profil admin")
+u3p4 = Profile.create!(user: u3, supplier: s1, role: "Profil admin")
+u3p5 = Profile.create!(user: u3, supplier: s2, role: "Profil admin")
+u3p6 = Profile.create!(user: u3, supplier: s3, role: "Profil admin")
+u3p7 = Profile.create!(user: u3, supplier: s4, role: "Profil admin")
+u3p8 = Profile.create!(user: u3, supplier: s5, role: "Profil admin")
+u3p9 = Profile.create!(user: u3, supplier: s6, role: "Profil admin")
+u3p10 = Profile.create!(user: u3, supplier: s7, role: "Profil admin")
 
 puts 'Creating Relations...'
 

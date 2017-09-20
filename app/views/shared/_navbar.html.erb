@@ -90,11 +90,19 @@
                 <%= link_to restaurant_path(current_user.restaurants.first) do %>
                   <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Tableau de bord") %>
                 <% end %>
+              <% elsif current_user.restaurants.length > 1 && @restaurant %>
+                <%= link_to restaurant_path(@restaurant) do %>
+                  <i class="fa fa-address-book-o" aria-hidden="true"></i>  <%= t(".profile", default: "Tableau de bord") %>
+                <% end %>
               <% end %>
             </li>
             <li>
               <% if current_user.restaurants.length == 1 %>
                 <%= link_to restaurant_index_validated_path(current_user.restaurants.first) do %>
+                  <i class="fa fa-first-order" aria-hidden="true"></i>  <%= t(".profile", default: "Mes commandes") %>
+                <% end %>
+              <% elsif current_user.restaurants.length > 1 && @restaurant %>
+                <%= link_to restaurant_index_validated_path(@restaurant) do %>
                   <i class="fa fa-first-order" aria-hidden="true"></i>  <%= t(".profile", default: "Mes commandes") %>
                 <% end %>
               <% end %>
