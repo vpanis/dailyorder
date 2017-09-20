@@ -108,6 +108,7 @@ class OrdersController < ApplicationController
   def edit
     @restaurant = Restaurant.find(params[:restaurant_id])
     @order = Order.find(params[:id])
+    @date = @order.delivery_date if @order.delivery_date
     authorize @order
     @relation = @order.relation
     @supplier = @relation.supplier
