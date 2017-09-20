@@ -19,7 +19,7 @@ module DeliveryConditionsHelper
 
   def set_starting_day(relation, date)
 
-    order_limits = [1, 1, 1, 1, 1, 1, 2]
+    order_limits = [0, 0, 0, 0, 0, 0, 1]
 
     relation.delivery_conditions.first.order_deadlines.each_with_index do |item, index|
       if item.nil?
